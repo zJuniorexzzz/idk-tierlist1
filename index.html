@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDK Tierlist | Ranking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@900&family=Oxanium:wght@600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0D0D12;
+            --color-card: #1A1A24;
+            --color-primary: #00A1E6;
+            --color-highlight: #00F7FF;
+            --color-text: #E6F9FF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Oxanium', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loader-text {
+            font-family: 'Kanit', sans-serif;
+            font-size: 1.8rem;
+            color: var(--color-highlight);
+            text-shadow: 0 0 10px var(--color-highlight);
+            margin-bottom: 1rem;
+        }
+
+        .loader-emoji {
+            font-size: 3rem;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .navbar {
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 247, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--color-highlight);
+        }
+
+        .logo i {
+            color: gold;
+            margin-right: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+            animation-delay: 3s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .search-bar {
+            width: 60%;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--color-highlight);
+            box-shadow: 0 0 10px rgba(0, 247, 255, 0.2);
+        }
+
+        .search-bar i {
+            color: var(--color-highlight);
+            font-size: 1rem;
+        }
+
+        #search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--color-text);
+            font-size: 0.9rem;
+            margin-left: 8px;
+            outline: none;
+        }
+
+        .ranking-table {
+            width: 90%;
+            margin: 0 auto;
+            background: var(--color-card);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 50px 2fr 1fr 1fr 1fr;
+            padding: 1rem;
+            background: rgba(0, 161, 230, 0.1);
+            font-weight: bold;
+        }
+
+        #players-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .player-row {
+            display: grid;
+            grid-template-columns: 50px 2fr 1fr 1fr 1fr;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .player-row:hover {
+            background: rgba(0, 161, 230, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .player-row:nth-child(1) {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent);
+            border-left: 3px solid gold;
+        }
+
+        .player-row:nth-child(2) {
+            background: linear-gradient(90deg, rgba(192, 192, 192, 0.1), transparent);
+            border-left: 3px solid silver;
+        }
+
+        .player-row:nth-child(3) {
+            background: linear-gradient(90deg, rgba(205, 127, 50, 0.1), transparent);
+            border-left: 3px solid #cd7f32;
+        }
+
+        @media (max-width: 768px) {
+            .search-bar {
+                width: 90%;
+            }
+            .ranking-table {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <div class="loader-text">🚀 Cargando IDK Tierlist...</div>
+        <div class="loader-emoji">🎮</div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-crown"></i>
+            <span>IDK TIERLIST</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="🔍 Buscar jugador...">
+        </div>
+
+        <div class="ranking-table">
+            <div class="table-header">
+                <span>#</span>
+                <span>Jugador</span>
+                <span>Región</span>
+                <span>Tier</span>
+                <span>Puntos</span>
+            </div>
+            <div id="players-list"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Datos de ejemplo (ordenados por puntos)
+        const players = [
+            { nick: "hijodesactive_", region: "SA", tier: "LT4, HT5, HT5, HT5", puntos: 9 },
+            { nick: "zLiv3r", region: "SA", tier: "HT4", puntos: 4 },
+            { nick: "aLarrYam_", region: "NA", tier: "HT4", puntos: 4 },
+            { nick: "SweaterWeather", region: "SA", tier: "LT4", puntos: 3 },
+            { nick: " isNotPablo", region: "NA", tier: "LT4", puntos: 3 },
+            { nick: " Xsasvinho_", region: "NA", tier: "LT4", puntos: 3 },
+            { nick: "SirHyrule_", region: "NA", tier: "HT5", puntos: 2 },
+            { nick: "SerNoob51", region: "SA", tier: "HT5", puntos: 2 },
+            { nick: " ahlzeimer", region: "NA", tier: "HT5", puntos: 2 },
+            { nick: "HqkpReptile_", region: "NA", tier: "HT5", puntos: 2 },
+            { nick: " lat", region: "NA", tier: "HT5", puntos: 2 },
+            { nick: "Papugamer777556", region: "NA", tier: "LT4, HT5", puntos: 5 },
+            { nick: "iOver_Vol —", region: "NA", tier: "LT3", puntos: 6 },
+            { nick: "ElixWz", region: "SA", tier: "LT4", puntos: 3 },
+            { nick: "ImLuissFA", region: "SA", tier: "HT4, HT4", puntos: 8 },
+            { nick: "Vic3rtz", region: "NA", tier: "HT3, HT4, HT5", puntos: 16 },
+            { nick: " Adolfo951", region: "NA", tier: "HT4, LT4", puntos: 7 },
+            { nick: " Sowzy_", region: "SA", tier: "LT3, LT4 ", puntos: 9},
+            { nick: " zToks", region: "EU", tier: "LT3", puntos: 6 },
+            { nick: "RegetPlace372", region: "SA", tier: "LT4, LT4 ", puntos: 6 },
+            { nick: " imxstrone", region: "NA", tier: "HT5", puntos: 2 },
+            { nick: " Panza09", region: "SA", tier: "LT3", puntos: 6 },
+            { nick: " DxstrFA", region: "SA", tier: "LT4", puntos: 3 },
+            { nick: "Christopher_gx", region: "NA", tier: "LT4", puntos: 3 },
+            { nick: "Zzenko", region: "SA", tier: "LT4", puntos: 3 },
+            { nick: "asdawer", region: "SA", tier: "HT3, HT4, LT4, LT4", puntos: 20 },
+            { nick: "Joaquin", region: "SA", tier: "LT3, LT3, LT4", puntos: 15 },
+            { nick: " TheGatoconbotas", region: "SA", tier: "HT5", puntos: 2 },
+            { nick: " X_lnLmao", region: "NA", tier: "HT5", puntos: 2 },
+            { nick: "PepePic4Picos", region: "SA", tier: "LT3, LT5 ", puntos: 7 },
+            { nick: "JAYTRON_MC", region: "SA", tier: "LT4 ", puntos: 3 },
+            { nick: " MasterOfRadio", region: "NA", tier: "LT4 ", puntos: 3 },
+            { nick: " telameso", region: "SA", tier: "HT4, HT5  ", puntos: 6 },
+            { nick: " Ahumado_", region: "SA", tier: "HT3 ", puntos: 10 },
+            { nick: " JOHN_0505", region: "NA", tier: "LT5", puntos: 1 },
+            { nick: " Pau54633", region: "EU", tier: "HT5 ", puntos: 2 },
+            { nick: " zFormula1", region: "NA", tier: "LT3, HT5  ", puntos: 8 },
+            { nick: " yiyivro", region: "NA", tier: "HT5", puntos: 2 },
+            { nick: " lolthetug123", region: "SA", tier: "HT5 ", puntos: 2 },
+            { nick: " EsposoDeMeluYork", region: "NA", tier: "HT4 ", puntos: 4 },
+            { nick: " SowDeOro", region: "NA", tier: "LT3, ", puntos: 6 },
+            { nick: "Lejo763", region: "NA", tier: "LT4", puntos: 3 },
+            { nick: " kickeselbenjii", region: "NA", tier: "LT4 ", puntos: 3 },
+            { nick: " technoLogicss", region: "SA", tier: "LT4", puntos: 3 },
+            { nick: "Snnifer", region: "SA", tier: "LT4 ", puntos: 3 },
+            { nick: ".itzcarlos951", region: "NA", tier: "LT5", puntos: 1 },
+            { nick: "Soysuco777xd", region: "NA", tier: "LT4", puntos: 3 },
+            { nick: ".MauricioEvil", region: "NA", tier: "HT4", puntos: 4 },
+            { nick: " Nyzx", region: "NA", tier: "HT4, LT5, LT5 ", puntos: 6 },
+            { nick: " _Nz1x", region: "NA", tier: "LT5", puntos: 1 },
+            { nick: "allusivepro834", region: "NA", tier: "HT4", puntos: 4 },
+            { nick: "zIlhiam1", region: "NA", tier: "LT3, LT4", puntos: 9 },
+            { nick: "zMuxz", region: "NA", tier: "HT3", puntos: 10 },
+            { nick: "alexzs15", region: "NA", tier: "LT3, HT4 ", puntos: 10 },
+            { nick: "lnnow", region: "NA", tier: "HT3", puntos: 10 },
+            { nick: "pushinghimaways", region: "NA", tier: "HT3", puntos: 10 },
+            { nick: " Cax", region: "NA", tier: "LT3, HT5", puntos: 9 },
+            { nick: "marcianitowaza_", region: "NA", tier: "LT3", puntos: 6 },
+            { nick: "muerteenmiboca2", region: "NA", tier: "LT3", puntos: 6},
+            { nick: "ro6vx", region: "NA", tier: "LT3", puntos: 6 },
+            { nick: "xeduxz_", region: "NA", tier: "LT3", puntos: 6 },
+            { nick: "ender12345z", region: "NA", tier: "LT3", puntos: 6 },
+            { nick: "IceBlace_", region: "NA", tier: "LT3", puntos: 6 },
+            { nick: "coscuarmyoficial", region: "NA", tier: "LT3", puntos: 6 },
+            { nick: "andy_sow", region: "NA", tier: "LT3", puntos: 6 },
+            { nick: "Yoperobaneada", region: "NA", tier: "LT3", puntos: 6 },
+            { nick: "FarmerLarau", region: "NA", tier: "LT3", puntos: 6 },
+            { nick: "irving0333", region: "SA", tier: "LT4, HT5", puntos: 5 },
+            { nick: "rayoyt", region: "NA", tier: "HT4", puntos: 3 },
+            { nick: "6riokz9", region: "SA", tier: "HT4", puntos: 4 },
+            { nick: "pankrasio08", region: "NA", tier: "HT4", puntos: 4 },
+            { nick: "Renacimiento", region: "NA", tier: "HT4", puntos: 4 },
+            { nick: "vaperzhin77", region: "SA", tier: "HT4", puntos: 4 },
+            { nick: "esposodesow", region: "SA", tier: "LT4", puntos: 3 },
+            { nick: "mxl0240", region: "SA", tier: "LT4", puntos: 3 },
+            { nick: "dxstr_02", region: "SA", tier: "LT4", puntos: 3 },
+            { nick: "sbea1", region: "NA", tier: "LT4", puntos: 3 },
+            { nick: "izab_32", region: "SA", tier: "LT4", puntos: 3 },
+
+
+        ];
+
+        function displayPlayers(playerList = players) {
+            const playersList = document.getElementById('players-list');
+            playersList.innerHTML = '';
+
+            // Ordenar por puntos (mayor a menor)
+            const sortedPlayers = [...playerList].sort((a, b) => b.puntos - a.puntos);
+
+            sortedPlayers.forEach((player, index) => {
+                const playerRow = document.createElement('div');
+                playerRow.className = 'player-row';
+                playerRow.innerHTML = `
+                    <span>${index + 1}</span>
+                    <span>${player.nick}</span>
+                    <span>${player.region}</span>
+                    <span>${player.tier}</span>
+                    <span>${player.puntos}</span>
+                `;
+                playersList.appendChild(playerRow);
+            });
+        }
+
+        // Buscador funcional
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredPlayers = players.filter(player => 
+                player.nick.toLowerCase().includes(searchTerm) || 
+                player.region.toLowerCase().includes(searchTerm) ||
+                player.tier.toLowerCase().includes(searchTerm)
+            );
+            displayPlayers(filteredPlayers);
+        });
+
+        // Inicializar
+        window.addEventListener('load', () => {
+            // Ocultar loader después de 3 segundos
+            setTimeout(() => {
+                document.querySelector('.loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.querySelector('.loader').style.display = 'none';
+                }, 500);
+            }, 3000);
+            
+            displayPlayers();
+            
+            // Partículas (opcional)
+            particlesJS("particles-js", {
+                particles: {
+                    number: { value: 80 },
+                    color: { value: "#00A1E6" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5 },
+                    size: { value: 3 },
+                    line_linked: { enable: true, distance: 150, color: "#00A1E6", opacity: 0.3 },
+                    move: { enable: true, speed: 3 }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
