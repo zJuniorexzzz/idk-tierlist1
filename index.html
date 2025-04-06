@@ -29,6 +29,26 @@
             overflow-x: hidden;
         }
 
+        @keyframes fadeInGlow {
+            0% { 
+                opacity: 0;
+                filter: blur(10px) brightness(0.5);
+                transform: scale(0.8);
+            }
+            100% { 
+                opacity: 1;
+                filter: blur(0) brightness(1);
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fall {
+            to { 
+                transform: translateY(100vh) rotate(360deg); 
+                opacity: 0;
+            }
+        }
+
         .loader {
             position: fixed;
             top: 0;
@@ -50,11 +70,12 @@
             color: var(--color-highlight);
             text-shadow: 0 0 10px var(--color-highlight);
             margin-bottom: 1rem;
+            animation: fadeInGlow 1.5s ease-out;
         }
 
         .loader-emoji {
             font-size: 3rem;
-            animation: bounce 1.5s infinite;
+            animation: bounce 1.5s infinite, fadeInGlow 2s ease-out;
         }
 
         @keyframes bounce {
@@ -62,11 +83,23 @@
             50% { transform: translateY(-20px); }
         }
 
+        #falling-leaves {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
         .navbar {
             padding: 1rem 2rem;
             background: rgba(10, 10, 20, 0.8);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0, 247, 255, 0.1);
+            animation: fadeInGlow 1s ease-out;
         }
 
         .logo {
@@ -85,12 +118,8 @@
             margin: 2rem auto;
             padding: 0 1rem;
             opacity: 0;
-            animation: fadeIn 0.5s ease-out forwards;
+            animation: fadeInGlow 0.5s ease-out forwards;
             animation-delay: 3s;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
         }
 
         .search-bar {
@@ -131,7 +160,7 @@
 
         .table-header {
             display: grid;
-            grid-template-columns: 50px 2fr 1fr 1fr 1fr;
+            grid-template-columns: 50px 2fr 1fr 2fr 1fr;
             padding: 1rem;
             background: rgba(0, 161, 230, 0.1);
             font-weight: bold;
@@ -144,10 +173,11 @@
 
         .player-row {
             display: grid;
-            grid-template-columns: 50px 2fr 1fr 1fr 1fr;
+            grid-template-columns: 50px 2fr 1fr 2fr 1fr;
             padding: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s;
+            align-items: center;
         }
 
         .player-row:hover {
@@ -170,12 +200,60 @@
             border-left: 3px solid #cd7f32;
         }
 
+        .player-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .player-name {
+            display: flex;
+            align-items: center;
+        }
+
+        .tier-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tier-main {
+            font-weight: bold;
+        }
+
+        .tier-subcategories {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            font-size: 0.8rem;
+            color: rgba(230, 249, 255, 0.7);
+        }
+
+        .tier-subcategory {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tier-subcategory span:first-child {
+            font-size: 0.7rem;
+            color: var(--color-highlight);
+        }
+
         @media (max-width: 768px) {
             .search-bar {
                 width: 90%;
             }
             .ranking-table {
                 width: 95%;
+                overflow-x: auto;
+            }
+            .table-header, .player-row {
+                grid-template-columns: 50px 150px 80px 200px 80px;
+            }
+            .tier-subcategories {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -185,6 +263,8 @@
         <div class="loader-text">🚀 Cargando IDK Tierlist...</div>
         <div class="loader-emoji">🎮</div>
     </div>
+
+    <div id="falling-leaves"></div>
 
     <nav class="navbar">
         <div class="logo">
@@ -211,91 +291,826 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Datos de ejemplo (ordenados por puntos)
+        // Datos de ejemplo completos con subtiers
         const players = [
-            { nick: "hijodesactive_", region: "SA", tier: "LT4, HT5, HT5, HT5", puntos: 9 },
-            { nick: "zLiv3r", region: "SA", tier: "HT4", puntos: 4 },
-            { nick: "aLarrYam_", region: "NA", tier: "HT4", puntos: 4 },
-            { nick: "SweaterWeather", region: "SA", tier: "LT4", puntos: 3 },
-            { nick: " isNotPablo", region: "NA", tier: "LT4", puntos: 3 },
-            { nick: " Xsasvinho_", region: "NA", tier: "LT4", puntos: 3 },
-            { nick: "SirHyrule_", region: "NA", tier: "HT5", puntos: 2 },
-            { nick: "SerNoob51", region: "SA", tier: "HT5", puntos: 2 },
-            { nick: " ahlzeimer", region: "NA", tier: "HT5", puntos: 2 },
-            { nick: "HqkpReptile_", region: "NA", tier: "HT5", puntos: 2 },
-            { nick: " lat", region: "NA", tier: "HT5", puntos: 2 },
-            { nick: "Papugamer777556", region: "NA", tier: "LT4, HT5", puntos: 5 },
-            { nick: "iOver_Vol —", region: "NA", tier: "LT3", puntos: 6 },
-            { nick: "ElixWz", region: "SA", tier: "LT4", puntos: 3 },
-            { nick: "ImLuissFA", region: "SA", tier: "HT4, HT4", puntos: 8 },
-            { nick: "Vic3rtz", region: "NA", tier: "HT3, HT4, HT5", puntos: 16 },
-            { nick: " Adolfo951", region: "NA", tier: "HT4, LT4", puntos: 7 },
-            { nick: " Sowzy_", region: "SA", tier: "LT3, LT4 ", puntos: 9},
-            { nick: " zToks", region: "EU", tier: "LT3", puntos: 6 },
-            { nick: "RegetPlace372", region: "SA", tier: "LT4, LT4 ", puntos: 6 },
-            { nick: " imxstrone", region: "NA", tier: "HT5", puntos: 2 },
-            { nick: " Panza09", region: "SA", tier: "LT3", puntos: 6 },
-            { nick: " DxstrFA", region: "SA", tier: "LT4", puntos: 3 },
-            { nick: "Christopher_gx", region: "NA", tier: "LT4", puntos: 3 },
-            { nick: "Zzenko", region: "SA", tier: "LT4", puntos: 3 },
-            { nick: "asdawer", region: "SA", tier: "HT3, HT4, LT4, LT4", puntos: 20 },
-            { nick: "Joaquin", region: "SA", tier: "LT3, LT3, LT4", puntos: 15 },
-            { nick: " TheGatoconbotas", region: "SA", tier: "HT5", puntos: 2 },
-            { nick: " X_lnLmao", region: "NA", tier: "HT5", puntos: 2 },
-            { nick: "PepePic4Picos", region: "SA", tier: "LT3, LT5 ", puntos: 7 },
-            { nick: "JAYTRON_MC", region: "SA", tier: "LT4 ", puntos: 3 },
-            { nick: " MasterOfRadio", region: "NA", tier: "LT4 ", puntos: 3 },
-            { nick: " telameso", region: "SA", tier: "HT4, HT5  ", puntos: 6 },
-            { nick: " Ahumado_", region: "SA", tier: "HT3 ", puntos: 10 },
-            { nick: " JOHN_0505", region: "NA", tier: "LT5", puntos: 1 },
-            { nick: " Pau54633", region: "EU", tier: "HT5 ", puntos: 2 },
-            { nick: " zFormula1", region: "NA", tier: "LT3, HT5  ", puntos: 8 },
-            { nick: " yiyivro", region: "NA", tier: "HT5", puntos: 2 },
-            { nick: " lolthetug123", region: "SA", tier: "HT5 ", puntos: 2 },
-            { nick: " EsposoDeMeluYork", region: "NA", tier: "HT4 ", puntos: 4 },
-            { nick: " SowDeOro", region: "NA", tier: "LT3, ", puntos: 6 },
-            { nick: "Lejo763", region: "NA", tier: "LT4", puntos: 3 },
-            { nick: " kickeselbenjii", region: "NA", tier: "LT4 ", puntos: 3 },
-            { nick: " technoLogicss", region: "SA", tier: "LT4", puntos: 3 },
-            { nick: "Snnifer", region: "SA", tier: "LT4 ", puntos: 3 },
-            { nick: ".itzcarlos951", region: "NA", tier: "LT5", puntos: 1 },
-            { nick: "Soysuco777xd", region: "NA", tier: "LT4", puntos: 3 },
-            { nick: ".MauricioEvil", region: "NA", tier: "HT4", puntos: 4 },
-            { nick: " Nyzx", region: "NA", tier: "HT4, LT5, LT5 ", puntos: 6 },
-            { nick: " _Nz1x", region: "NA", tier: "LT5", puntos: 1 },
-            { nick: "allusivepro834", region: "NA", tier: "HT4", puntos: 4 },
-            { nick: "zIlhiam1", region: "NA", tier: "LT3, LT4", puntos: 9 },
-            { nick: "zMuxz", region: "NA", tier: "HT3", puntos: 10 },
-            { nick: "alexzs15", region: "NA", tier: "LT3, HT4 ", puntos: 10 },
-            { nick: "lnnow", region: "NA", tier: "HT3", puntos: 10 },
-            { nick: "pushinghimaways", region: "NA", tier: "HT3", puntos: 10 },
-            { nick: " Cax", region: "NA", tier: "LT3, HT5", puntos: 9 },
-            { nick: "marcianitowaza_", region: "NA", tier: "LT3", puntos: 6 },
-            { nick: "muerteenmiboca2", region: "NA", tier: "LT3", puntos: 6},
-            { nick: "ro6vx", region: "NA", tier: "LT3", puntos: 6 },
-            { nick: "xeduxz_", region: "NA", tier: "LT3", puntos: 6 },
-            { nick: "ender12345z", region: "NA", tier: "LT3", puntos: 6 },
-            { nick: "IceBlace_", region: "NA", tier: "LT3", puntos: 6 },
-            { nick: "coscuarmyoficial", region: "NA", tier: "LT3", puntos: 6 },
-            { nick: "andy_sow", region: "NA", tier: "LT3", puntos: 6 },
-            { nick: "Yoperobaneada", region: "NA", tier: "LT3", puntos: 6 },
-            { nick: "FarmerLarau", region: "NA", tier: "LT3", puntos: 6 },
-            { nick: "irving0333", region: "SA", tier: "LT4, HT5", puntos: 5 },
-            { nick: "rayoyt", region: "NA", tier: "HT4", puntos: 3 },
-            { nick: "6riokz9", region: "SA", tier: "HT4", puntos: 4 },
-            { nick: "pankrasio08", region: "NA", tier: "HT4", puntos: 4 },
-            { nick: "Renacimiento", region: "NA", tier: "HT4", puntos: 4 },
-            { nick: "vaperzhin77", region: "SA", tier: "HT4", puntos: 4 },
-            { nick: "esposodesow", region: "SA", tier: "LT4", puntos: 3 },
-            { nick: "mxl0240", region: "SA", tier: "LT4", puntos: 3 },
-            { nick: "dxstr_02", region: "SA", tier: "LT4", puntos: 3 },
-            { nick: "sbea1", region: "NA", tier: "LT4", puntos: 3 },
-            { nick: "izab_32", region: "SA", tier: "LT4", puntos: 3 },
-            { nick: "VividoTotal", region: "SA", tier: "HT5", puntos: 2 },
-            { nick: "1SlowAimz", region: "NA", tier: "HT5", puntos: 2 },
-            { nick: "WholsNash", region: "NA", tier: "LT4", puntos: 3 }
+            { 
+                nick: "asdawer", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "LT4",
+                    uhc: "HT3",
+                    sword: "HT4"
+                },
+                puntos: 20,
+                premium: true
+            },
+            { 
+                nick: " ImLuissFA", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT4",
+                    crystal: "HT5",
+                    uhc: "HT4",
+                    sword: "LT3"
+                },
+                puntos: 16,
+                premium: true
+            },
+            { 
+                nick: "WatonDeOro", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT3",
+                    crystal: "",
+                    uhc: "",
+                    sword: "LT3"
+                },
+                puntos: 12,
+                premium: true 
+            },
+            { 
+                nick: " WholsNash", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "LT4",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+            { 
+                nick: "SirHyrule_", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 2,
+                premium: true 
+            },
+            { 
+                nick: " SweaterWeather", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+            { 
+                nick: "isNotPablo", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+            { 
+                nick: "SerNoob51", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 2,
+                premium: true 
+            },
+            { 
+                nick: " Xsasvinho_", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+            { 
+                nick: " ahlzeimer", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 2,
+                premium: true 
+            },
+            { 
+                nick: " HqkpReptile_", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 2,
+                premium: true 
+            },
+            { 
+                nick: "hijodesactive_", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "LT4",
+                    uhc: "HT5",
+                    sword: "HT5"
+                },
+                puntos: 9,
+                premium: true 
+            },
+            { 
+                nick: "lat", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "HT5",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 4,
+                premium: true 
+            },
+            { 
+                nick: "zLiv3r", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "HT4",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 4,
+                premium: true 
+            },
+            { 
+                nick: "aLarrYam_", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 4,
+                premium: true 
+            },
+            { 
+                nick: "Papugamer777556", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "LT4",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 5,
+                premium: true 
+            },
+            { 
+                nick: "iOver_Vol —", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT3",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 6,
+                premium: true 
+            },
+            { 
+                nick: " ElixWz", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+            { 
+                nick: "Vic3rtz", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "",
+                    uhc: "HT3",
+                    sword: "HT4"
+                },
+                puntos: 16,
+                premium: true 
+            },
+            { 
+                nick: " Adolfo951", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "HT4",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 7,
+                premium: true 
+            },
+            { 
+                nick: " Sowzy_", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT3",
+                    crystal: "",
+                    uhc: "",
+                    sword: "LT4"
+                },
+                puntos: 9,
+                premium: true 
+            },
+            { 
+                nick: "zToks", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "LT3",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 6,
+                premium: true 
+            },
+            { 
+                nick: "  RegetPlace372", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "LT4",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 6,
+                premium: true 
+            },
+
+            { 
+                nick: " imxstrone", 
+                region: "", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 2,
+                premium: true 
+            },
+
+            { 
+                nick: " Panza09", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT3",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 6,
+                premium: true 
+            },
+
+            { 
+                nick: " DxstrFA", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+                nick: "  Christopher_gx", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+                nick: " Zzenko ", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+                nick: "TheGatoconbotas ", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 2,
+                premium: true 
+            },
+
+            { 
+                nick: "  PepePic4Picos", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT5",
+                    crystal: "",
+                    uhc: "LT3",
+                    sword: ""
+                },
+                puntos: 7,
+                premium: true 
+            },
+
+            { 
+                nick: " JAYTRON_MC", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "",
+                    uhc: "LT4",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+
+                nick: "  MasterOfRadio", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+                nick: "zLiv3r ", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "HT4",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 6,
+                premium: true 
+            },
+
+            { 
+                nick: "  telameso", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "",
+                    uhc: "HT5",
+                    sword: "HT4"
+                },
+                puntos: 6,
+                premium: true 
+            },
+
+            { 
+                nick: "Ahumado_ ", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "",
+                    uhc: "HT3",
+                    sword: ""
+                },
+                puntos: 10,
+                premium: true 
+            },
+
+            { 
+                nick: " JOHN_0505", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 1,
+                premium: true 
+            },
+
+            { 
+                nick: " Pau54633", 
+                region: "EU", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 2,
+                premium: true 
+            },
+
+            { 
+                nick: "zFormula1 ", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "LT3",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 8,
+                premium: true 
+            },
+
+            { 
+                nick: "yiyivro ", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "HT5",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+                nick: "  SweaterWeather", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+                nick: " EsposoDeMeluYork ", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos:  4,
+                premium: true 
+            },
+
+            { 
+                nick: " SowDeOro", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT3",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 6,
+                premium: true 
+            },
+
+            { 
+                nick: "  joaquin1827", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "LT3",
+                    sword: "LT3"
+                },
+                puntos: 15,
+                premium: true 
+            },
+
+            { 
+                nick: "  Lejo763", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+                nick: "  kickeselbenjii", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+                nick: "  technoLogicss", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "LT4",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+                nick: " Snnifer", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "HT4",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 4,
+                premium: true 
+            },
+
+            { 
+                nick: " .itzcarlos951", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 1,
+                premium: true 
+            },
+
+            { 
+                nick: "Soysuco777xd ", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+                nick: " MauricioEvil ", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "HT4",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 4,
+                premium: true 
+            },
+
+            { 
+                nick: "  Nyzx", 
+                region: "", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT5",
+                    crystal: "HT4",
+                    uhc: "",
+                    sword: "LT5"
+                },
+                puntos: 6,
+                premium: true 
+            },
+            { 
+                nick: "_Nz1x", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 1,
+                premium: true 
+            },
+
+            { 
+                nick: "Allusivepro", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+            { 
+                nick: "zIlhiam1", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: "LT3"
+                },
+                puntos: 9,
+                premium: true 
+            },
+
+            { 
+                nick: "lnnow", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "HT3",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 10,
+                premium: true 
+            },
+
+            { 
+                nick: "yoperobaneada", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "LT3",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 6,
+                premium: true 
+            },
+
+            { 
+                nick: "doudix12", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "LT3",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 9,
+                premium: true 
+            },
+
+            { 
+                nick: "123asd456", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "LT3",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 6,
+                premium: true 
+            },
+
+            { 
+                nick: "2kl__", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "LT3",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 6,
+                premium: true 
+            },
+
+            { 
+                nick: "rayoyt", 
+                region: "EU", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "",
+                    uhc: "",
+                    sword: "HT4"
+                },
+                puntos: 4,
+                premium: true 
+            },
 
         ];
 
@@ -303,24 +1118,88 @@
             const playersList = document.getElementById('players-list');
             playersList.innerHTML = '';
 
-            // Ordenar por puntos (mayor a menor)
             const sortedPlayers = [...playerList].sort((a, b) => b.puntos - a.puntos);
 
             sortedPlayers.forEach((player, index) => {
                 const playerRow = document.createElement('div');
                 playerRow.className = 'player-row';
+                
+                const avatarImg = document.createElement('img');
+                avatarImg.className = 'player-avatar';
+                avatarImg.src = player.premium 
+                    ? `https://mc-heads.net/avatar/${encodeURIComponent(player.nick)}/32` 
+                    : 'https://mc-heads.net/avatar/MHF_Steve/32';
+                avatarImg.alt = `Avatar de ${player.nick}`;
+                avatarImg.onerror = function() {
+                    this.src = 'https://mc-heads.net/avatar/MHF_Steve/32';
+                };
+                
+                const nameContainer = document.createElement('div');
+                nameContainer.className = 'player-name';
+                nameContainer.appendChild(avatarImg);
+                nameContainer.appendChild(document.createTextNode(player.nick));
+                
+                const tierContainer = document.createElement('div');
+                tierContainer.className = 'tier-container';
+                
+                const tierMain = document.createElement('div');
+                tierMain.className = 'tier-main';
+                tierMain.textContent = player.tier;
+                
+                const tierSubcategories = document.createElement('div');
+                tierSubcategories.className = 'tier-subcategories';
+                
+                ['nethpot', 'crystal', 'uhc', 'sword'].forEach(category => {
+                    const subcat = document.createElement('div');
+                    subcat.className = 'tier-subcategory';
+                    
+                    const label = document.createElement('span');
+                    label.textContent = category;
+                    
+                    const value = document.createElement('span');
+                    value.textContent = player.subTiers?.[category] || '-';
+                    
+                    subcat.appendChild(label);
+                    subcat.appendChild(value);
+                    tierSubcategories.appendChild(subcat);
+                });
+                
+                tierContainer.appendChild(tierMain);
+                tierContainer.appendChild(tierSubcategories);
+                
                 playerRow.innerHTML = `
                     <span>${index + 1}</span>
-                    <span>${player.nick}</span>
+                    <span></span>
                     <span>${player.region}</span>
-                    <span>${player.tier}</span>
+                    <span></span>
                     <span>${player.puntos}</span>
                 `;
+                
+                playerRow.children[1].appendChild(nameContainer);
+                playerRow.children[3].appendChild(tierContainer);
+                
                 playersList.appendChild(playerRow);
             });
         }
 
-        // Buscador funcional
+        function createLeaves() {
+            const leavesContainer = document.getElementById('falling-leaves');
+            const leafTypes = ['🍁', '🍂', '🌸', '✨', '🎮', '⚡'];
+
+            for (let i = 0; i < 25; i++) {
+                const leaf = document.createElement('div');
+                leaf.innerHTML = leafTypes[Math.floor(Math.random() * leafTypes.length)];
+                leaf.style.position = 'fixed';
+                leaf.style.top = '-50px';
+                leaf.style.left = `${Math.random() * 100}vw`;
+                leaf.style.fontSize = `${Math.random() * 20 + 10}px`;
+                leaf.style.animation = `fall ${Math.random() * 5 + 5}s linear infinite`;
+                leaf.style.opacity = '0.7';
+                leaf.style.userSelect = 'none';
+                leavesContainer.appendChild(leaf);
+            }
+        }
+
         document.getElementById('search-input').addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
             const filteredPlayers = players.filter(player => 
@@ -331,9 +1210,7 @@
             displayPlayers(filteredPlayers);
         });
 
-        // Inicializar
         window.addEventListener('load', () => {
-            // Ocultar loader después de 3 segundos
             setTimeout(() => {
                 document.querySelector('.loader').style.opacity = '0';
                 setTimeout(() => {
@@ -342,19 +1219,7 @@
             }, 3000);
             
             displayPlayers();
-            
-            // Partículas (opcional)
-            particlesJS("particles-js", {
-                particles: {
-                    number: { value: 80 },
-                    color: { value: "#00A1E6" },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.5 },
-                    size: { value: 3 },
-                    line_linked: { enable: true, distance: 150, color: "#00A1E6", opacity: 0.3 },
-                    move: { enable: true, speed: 3 }
-                }
-            });
+            createLeaves();
         });
     </script>
 </body>
