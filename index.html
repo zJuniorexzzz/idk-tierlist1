@@ -13,6 +13,7 @@
             --color-primary: #00A1E6;
             --color-highlight: #00F7FF;
             --color-text: #E6F9FF;
+            --rog-red: #ff0000;
         }
 
         * {
@@ -67,20 +68,104 @@
         .loader-text {
             font-family: 'Kanit', sans-serif;
             font-size: 1.8rem;
-            color: var(--color-highlight);
-            text-shadow: 0 0 10px var(--color-highlight);
-            margin-bottom: 1rem;
-            animation: fadeInGlow 1.5s ease-out;
+            color: var(--rog-red);
+            text-shadow: 0 0 10px var(--rog-red);
+            margin-bottom: 2rem;
+            animation: fadeInGlow 1.5s ease-out, pulse 1.5s infinite;
         }
 
-        .loader-emoji {
-            font-size: 3rem;
-            animation: bounce 1.5s infinite, fadeInGlow 2s ease-out;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        .sword-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 2rem;
+        }
+
+        .sword {
+            font-size: 6rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: top center;
+            animation: swordSlash 1.2s ease-out forwards;
+            color: var(--rog-red);
+            text-shadow: 0 0 15px var(--rog-red);
+            z-index: 2;
+        }
+
+        .slash-effect {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: var(--rog-red);
+            box-shadow: 0 0 15px var(--rog-red);
+            top: 50%;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: slashExpand 0.8s ease-out 0.3s forwards;
+            z-index: 1;
+        }
+
+        .cut-object {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #333, #555);
+            border-radius: 10px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .cut-object::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 48%, var(--rog-red) 48%, var(--rog-red) 52%, transparent 52%);
+            opacity: 0;
+            animation: cutReveal 0.8s ease-out 0.5s forwards;
+        }
+
+        @keyframes swordSlash {
+            0% { 
+                transform: translate(-50%, -50%) rotate(0deg) scale(0.5); 
+                opacity: 0; 
+            }
+            20% { 
+                transform: translate(-50%, -50%) rotate(-30deg) scale(1.3); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: translate(-50%, -50%) rotate(45deg) scale(1.5); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) rotate(0deg) scale(1); 
+                opacity: 1; 
+            }
+        }
+
+        @keyframes slashExpand {
+            0% { transform: scaleX(0); opacity: 0; }
+            50% { transform: scaleX(1); opacity: 1; }
+            100% { transform: scaleX(0); opacity: 0; }
+        }
+
+        @keyframes cutReveal {
+            0% { opacity: 0; transform: translateY(-100%); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         #falling-leaves {
@@ -94,6 +179,7 @@
             overflow: hidden;
         }
 
+        /* Resto de tus estilos permanecen igual */
         .navbar {
             padding: 1rem 2rem;
             background: rgba(10, 10, 20, 0.8);
@@ -280,6 +366,7 @@
         .tier-icon {
             width: 16px;
             height: 16px;
+            margin-right: 4px;
         }
 
         .modal {
@@ -400,8 +487,13 @@
 </head>
 <body>
     <div class="loader">
-        <div class="loader-text">🚀 Cargando Moon tierlist...</div>
-        <div class="loader-emoji">🎮</div>
+        <div class="loader-text">⚔️ Cargando Moon Tierlist...</div>
+        <div class="sword-container">
+            <div class="cut-object"></div>
+            <div class="sword">🗡️</div>
+            <div class="slash-effect"></div>
+        </div>
+        <audio id="swordSound" src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-robot-glitch-2668.mp3" preload="auto"></audio>
     </div>
 
     <div id="falling-leaves"></div>
@@ -474,6 +566,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
         // Datos de ejemplo completos con subtiers
@@ -1692,13 +1785,14 @@
 
         ];
 
-         function displayPlayers(playerList = players) {
+                // ========== FUNCIÓN PRINCIPAL (CON ICONOS) ==========
+        function displayPlayers(playerList = players) {
             const playersList = document.getElementById('players-list');
             playersList.innerHTML = '';
 
             const sortedPlayers = [...playerList].sort((a, b) => b.puntos - a.puntos);
 
-            // Objeto con las URLs de las imágenes para cada subcategoría
+            // Iconos para subcategorías
             const subcategoryIcons = {
                 nethpot: 'https://mctiers.com/tier_icons/nethop.svg',
                 crystal: 'https://mctiers.com/tier_icons/vanilla.svg',
@@ -1710,75 +1804,188 @@
                 const playerRow = document.createElement('div');
                 playerRow.className = 'player-row';
                 
+                // Avatar
                 const avatarImg = document.createElement('img');
                 avatarImg.className = 'player-avatar';
                 avatarImg.src = player.premium 
-                    ? `https://mc-heads.net/avatar/${encodeURIComponent(player.nick)}/32` 
+                    ? `https://mc-heads.net/avatar/${encodeURIComponent(player.nick.trim())}/32` 
                     : 'https://mc-heads.net/avatar/MHF_Steve/32';
-                avatarImg.alt = `Avatar de ${player.nick}`;
                 avatarImg.onerror = function() {
                     this.src = 'https://mc-heads.net/avatar/MHF_Steve/32';
                 };
                 
+                // Nombre
                 const nameContainer = document.createElement('div');
                 nameContainer.className = 'player-name';
                 nameContainer.appendChild(avatarImg);
                 nameContainer.appendChild(document.createTextNode(player.nick));
                 
+                // Contenedor de Tiers
                 const tierContainer = document.createElement('div');
                 tierContainer.className = 'tier-container';
-                
-                const tierMain = document.createElement('div');
-                tierMain.className = 'tier-main';
-                tierMain.textContent = player.tier;
                 
                 const tierSubcategories = document.createElement('div');
                 tierSubcategories.className = 'tier-subcategories';
                 
+                // Subcategorías con iconos
                 ['nethpot', 'crystal', 'uhc', 'sword'].forEach(category => {
                     const subcat = document.createElement('div');
                     subcat.className = 'tier-subcategory';
                     
-                    // Crear contenedor para el icono y el nombre
-                    const labelContainer = document.createElement('span');
+                    // Etiqueta con icono
+                    const label = document.createElement('span');
+                    const icon = document.createElement('img');
+                    icon.src = subcategoryIcons[category];
+                    icon.className = 'tier-icon';
+                    icon.alt = category;
                     
-                    // Crear elemento de imagen para el icono
-                    const iconImg = document.createElement('img');
-                    iconImg.src = subcategoryIcons[category];
-                    iconImg.className = 'tier-icon';
-                    iconImg.alt = `${category} icon`;
+                    label.appendChild(icon);
+                    label.appendChild(document.createTextNode(category));
                     
-                    const labelText = document.createTextNode(category);
-                    
-                    labelContainer.appendChild(iconImg);
-                    labelContainer.appendChild(labelText);
-                    
+                    // Valor del tier
                     const value = document.createElement('span');
                     value.textContent = player.subTiers?.[category] || '-';
                     
-                    subcat.appendChild(labelContainer);
+                    subcat.appendChild(label);
                     subcat.appendChild(value);
                     tierSubcategories.appendChild(subcat);
                 });
                 
-                tierContainer.appendChild(tierMain);
                 tierContainer.appendChild(tierSubcategories);
                 
+                // Estructura de fila
                 playerRow.innerHTML = `
                     <span>${index + 1}</span>
                     <span></span>
-                    <span>${player.region}</span>
+                    <span>${player.region || '-'}</span>
                     <span></span>
                     <span>${player.puntos}</span>
                 `;
                 
                 playerRow.children[1].appendChild(nameContainer);
                 playerRow.children[3].appendChild(tierContainer);
-                
                 playersList.appendChild(playerRow);
             });
         }
 
+        // ========== FUNCIONES PARA EL MODAL ==========
+        function tierToNumber(tier) {
+            if (!tier) return 0;
+            const tierNum = parseInt(tier.replace(/\D/g, '')) || 0;
+            return tierNum > 5 ? 5 : tierNum; // Limitar a tier 5 máximo
+        }
+
+        function openCategoryModal(category) {
+            const modal = document.getElementById('category-modal');
+            const modalTitle = document.getElementById('modal-title');
+            
+            const titles = {
+                'all': 'Todos los jugadores',
+                'nethpot': 'Nethpot',
+                'crystal': 'Crystal',
+                'sword': 'Sword',
+                'uhc': 'UHC'
+            };
+            
+            modalTitle.textContent = titles[category] || 'Categoría';
+            modal.dataset.category = category;
+            
+            // Resetear tabs
+            document.querySelectorAll('.tier-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector('.tier-tab[data-tier="all"]').classList.add('active');
+            
+            showPlayersByTier(category, 'all');
+            modal.style.display = 'flex';
+        }
+
+        function showPlayersByTier(category, tier) {
+            const container = document.getElementById('tier-players');
+            container.innerHTML = '';
+            
+            const filteredPlayers = players.filter(player => {
+                if (category === 'all') return true;
+                const playerTier = player.subTiers?.[category];
+                if (!playerTier) return false;
+                if (tier === 'all') return true;
+                return tierToNumber(playerTier) === parseInt(tier);
+            }).sort((a, b) => b.puntos - a.puntos);
+            
+            filteredPlayers.forEach(player => {
+                const playerElement = document.createElement('div');
+                playerElement.className = 'tier-player';
+                
+                // Avatar
+                const avatar = document.createElement('img');
+                avatar.className = 'tier-player-avatar';
+                avatar.src = player.premium 
+                    ? `https://mc-heads.net/avatar/${encodeURIComponent(player.nick.trim())}/32` 
+                    : 'https://mc-heads.net/avatar/MHF_Steve/32';
+                avatar.onerror = () => avatar.src = 'https://mc-heads.net/avatar/MHF_Steve/32';
+                
+                // Info
+                const playerInfo = document.createElement('div');
+                playerInfo.className = 'player-info';
+                
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = player.nick;
+                
+                const tierSpan = document.createElement('span');
+                tierSpan.className = 'tier-badge';
+                tierSpan.textContent = player.subTiers?.[category] || '-';
+                
+                playerInfo.appendChild(nameSpan);
+                playerInfo.appendChild(tierSpan);
+                
+                playerElement.appendChild(avatar);
+                playerElement.appendChild(playerInfo);
+                container.appendChild(playerElement);
+            });
+        }
+
+        // ========== EVENTOS ==========
+        document.getElementById('tier-tabs').addEventListener('click', (e) => {
+            if (e.target.classList.contains('tier-tab')) {
+                document.querySelectorAll('.tier-tab').forEach(t => t.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                const modal = document.getElementById('category-modal');
+                showPlayersByTier(modal.dataset.category, e.target.dataset.tier);
+            }
+        });
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase().trim();
+            const filtered = players.filter(p => 
+                p.nick.toLowerCase().includes(term) || 
+                (p.region && p.region.toLowerCase().includes(term))
+            );
+            displayPlayers(filtered);
+        });
+
+        function closeModal() {
+            document.getElementById('category-modal').style.display = 'none';
+        }
+
+        // ========== INICIALIZACIÓN ==========
+        window.addEventListener('load', () => {
+            // Reproducir sonido ROG Strix
+            const swordSound = document.getElementById('swordSound');
+            swordSound.volume = 0.5;
+            swordSound.play();
+            
+            setTimeout(() => {
+                document.querySelector('.loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.querySelector('.loader').style.display = 'none';
+                    displayPlayers();
+                    createLeaves();
+                }, 500);
+            }, 2000);
+        });
+
+        // Función para las hojas animadas (opcional)
         function createLeaves() {
             const leavesContainer = document.getElementById('falling-leaves');
             const leafTypes = ['🍁', '🍂', '🌸', '✨', '🎮', '⚡'];
@@ -1796,220 +2003,6 @@
                 leavesContainer.appendChild(leaf);
             }
         }
-
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            const filteredPlayers = players.filter(player => 
-                player.nick.toLowerCase().includes(searchTerm) || 
-                player.region.toLowerCase().includes(searchTerm) ||
-                player.tier.toLowerCase().includes(searchTerm)
-            );
-            displayPlayers(filteredPlayers);
-        });
-
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.querySelector('.loader').style.opacity = '0';
-                setTimeout(() => {
-                    document.querySelector('.loader').style.display = 'none';
-                }, 500);
-            }, 3000);
-            
-            displayPlayers();
-            createLeaves();
-        });
-         // Función para convertir tier a número (LT1/HT1 = 1, LT2/HT2 = 2, etc.)
-    function tierToNumber(tier) {
-        if (!tier) return 0;
-        const tierNum = parseInt(tier.replace(/[^\d]/g, ''));
-        return tierNum || 0;
-    }
-
-    // Función para abrir el modal de categoría
-    function openCategoryModal(category) {
-        const modal = document.getElementById('category-modal');
-        const modalTitle = document.getElementById('modal-title');
-        
-        // Configurar título según la categoría
-        const categoryNames = {
-            'all': 'Todos los jugadores',
-            'nethpot': 'Nethpot',
-            'crystal': 'Crystal',
-            'sword': 'Sword',
-            'uhc': 'UHC'
-        };
-        modalTitle.textContent = categoryNames[category];
-        
-        // Guardar la categoría seleccionada en el modal
-        modal.dataset.category = category;
-        
-        // Mostrar todos los jugadores inicialmente
-        showPlayersByTier(category, 'all');
-        
-        // Mostrar el modal
-        modal.style.display = 'flex';
-    }
-
-    // Función para mostrar jugadores por tier
-    function showPlayersByTier(category, tier) {
-        const tierPlayersContainer = document.getElementById('tier-players');
-        tierPlayersContainer.innerHTML = '';
-        
-        // Filtrar jugadores según categoría y tier
-        let filteredPlayers = players.filter(player => {
-            if (category === 'all') return true; // Mostrar todos si es "all"
-            
-            const playerTier = player.subTiers[category];
-            if (!playerTier) return false; // Si no tiene tier en esta categoría
-            
-            if (tier === 'all') return true; // Mostrar todos los tiers si es "all"
-            
-            const tierNum = tierToNumber(playerTier);
-            return tierNum === parseInt(tier);
-        });
-        
-        // Ordenar por puntos descendente
-        filteredPlayers.sort((a, b) => b.puntos - a.puntos);
-        
-        // Mostrar jugadores en el modal
-        filteredPlayers.forEach(player => {
-            const playerElement = document.createElement('div');
-            playerElement.className = 'tier-player';
-            
-            const avatar = document.createElement('img');
-            avatar.className = 'tier-player-avatar';
-            avatar.src = player.premium 
-                ? `https://mc-heads.net/avatar/${encodeURIComponent(player.nick)}/32` 
-                : 'https://mc-heads.net/avatar/MHF_Steve/32';
-            avatar.onerror = () => avatar.src = 'https://mc-heads.net/avatar/MHF_Steve/32';
-            
-            const playerInfo = document.createElement('div');
-            playerInfo.innerHTML = `
-                <span>${player.nick}</span>
-                <span class="tier-badge">${player.subTiers[category] || '-'}</span>
-            `;
-            
-            playerElement.appendChild(avatar);
-            playerElement.appendChild(playerInfo);
-            tierPlayersContainer.appendChild(playerElement);
-        });
-    }
-
-    // Evento para los tabs de tiers
-    document.getElementById('tier-tabs').addEventListener('click', (e) => {
-        if (e.target.classList.contains('tier-tab')) {
-            // Remover clase 'active' de todos los tabs
-            document.querySelectorAll('.tier-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Agregar 'active' al tab clickeado
-            e.target.classList.add('active');
-            
-            // Obtener categoría y tier seleccionados
-            const modal = document.getElementById('category-modal');
-            const category = modal.dataset.category;
-            const tier = e.target.dataset.tier;
-            
-            // Mostrar jugadores filtrados
-            showPlayersByTier(category, tier);
-        }
-    });
-
-    // Función para cerrar el modal
-    function closeModal() {
-        document.getElementById('category-modal').style.display = 'none';
-    }
-
-    // Mostrar jugadores en la tabla principal (tu función original)
-    function displayPlayers(playerList = players) {
-        const playersList = document.getElementById('players-list');
-        playersList.innerHTML = '';
-
-        const sortedPlayers = [...playerList].sort((a, b) => b.puntos - a.puntos);
-
-        sortedPlayers.forEach((player, index) => {
-            const playerRow = document.createElement('div');
-            playerRow.className = 'player-row';
-            
-            const avatarImg = document.createElement('img');
-            avatarImg.className = 'player-avatar';
-            avatarImg.src = player.premium 
-                ? `https://mc-heads.net/avatar/${encodeURIComponent(player.nick)}/32` 
-                : 'https://mc-heads.net/avatar/MHF_Steve/32';
-            avatarImg.onerror = function() {
-                this.src = 'https://mc-heads.net/avatar/MHF_Steve/32';
-            };
-            
-            const nameContainer = document.createElement('div');
-            nameContainer.className = 'player-name';
-            nameContainer.appendChild(avatarImg);
-            nameContainer.appendChild(document.createTextNode(player.nick));
-            
-            const tierContainer = document.createElement('div');
-            tierContainer.className = 'tier-container';
-            
-            const tierMain = document.createElement('div');
-            tierMain.className = 'tier-main';
-            tierMain.textContent = player.tier;
-            
-            const tierSubcategories = document.createElement('div');
-            tierSubcategories.className = 'tier-subcategories';
-            
-            ['nethpot', 'crystal', 'uhc', 'sword'].forEach(category => {
-                const subcat = document.createElement('div');
-                subcat.className = 'tier-subcategory';
-                
-                const label = document.createElement('span');
-                label.textContent = category;
-                
-                const value = document.createElement('span');
-                value.textContent = player.subTiers?.[category] || '-';
-                
-                subcat.appendChild(label);
-                subcat.appendChild(value);
-                tierSubcategories.appendChild(subcat);
-            });
-            
-            tierContainer.appendChild(tierMain);
-            tierContainer.appendChild(tierSubcategories);
-            
-            playerRow.innerHTML = `
-                <span>${index + 1}</span>
-                <span></span>
-                <span>${player.region}</span>
-                <span></span>
-                <span>${player.puntos}</span>
-            `;
-            
-            playerRow.children[1].appendChild(nameContainer);
-            playerRow.children[3].appendChild(tierContainer);
-            playersList.appendChild(playerRow);
-        });
-    }
-
-    // Inicializar la tabla al cargar la página
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            document.querySelector('.loader').style.opacity = '0';
-            setTimeout(() => {
-                document.querySelector('.loader').style.display = 'none';
-            }, 500);
-        }, 3000);
-        
-        displayPlayers();
-    });
-
-    // Búsqueda de jugadores (tu función original)
-    document.getElementById('search-input').addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        const filteredPlayers = players.filter(player => 
-            player.nick.toLowerCase().includes(searchTerm) || 
-            player.region.toLowerCase().includes(searchTerm)
-        );
-        displayPlayers(filteredPlayers);
-    });
-</script>
     </script>
 </body>
 </html>
