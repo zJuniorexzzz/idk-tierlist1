@@ -122,6 +122,39 @@
             animation-delay: 3s;
         }
 
+        .categories-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 80px;
+        }
+
+        .category:hover {
+            transform: scale(1.1);
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+
+        .category-name {
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
         .search-bar {
             width: 60%;
             margin: 2rem auto;
@@ -239,6 +272,107 @@
         .tier-subcategory span:first-child {
             font-size: 0.7rem;
             color: var(--color-highlight);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tier-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--color-card);
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--color-highlight);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--color-text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .tier-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tier-tab {
+            padding: 8px 15px;
+            background: rgba(0, 161, 230, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .tier-tab:hover, .tier-tab.active {
+            background: var(--color-primary);
+        }
+
+        .tier-players {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .tier-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+
+        .tier-player-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .tier-badge {
+            padding: 2px 6px;
+            background: rgba(0, 247, 255, 0.2);
+            border-radius: 3px;
+            font-size: 0.7rem;
+            margin-left: auto;
         }
 
         @media (max-width: 768px) {
@@ -254,6 +388,12 @@
             }
             .tier-subcategories {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .modal-content {
+                width: 95%;
+            }
+            .tier-players {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -274,6 +414,29 @@
     </nav>
 
     <div class="container">
+        <div class="categories-container">
+            <div class="category" onclick="openCategoryModal('all')">
+                <img src="https://mctiers.com/tier_icons/vanilla.svg" class="category-icon">
+                <span class="category-name">Todos</span>
+            </div>
+            <div class="category" onclick="openCategoryModal('nethpot')">
+                <img src="https://mctiers.com/tier_icons/nethop.svg" class="category-icon">
+                <span class="category-name">Nethpot</span>
+            </div>
+            <div class="category" onclick="openCategoryModal('crystal')">
+                <img src="https://mctiers.com/tier_icons/vanilla.svg" class="category-icon">
+                <span class="category-name">Crystal</span>
+            </div>
+            <div class="category" onclick="openCategoryModal('sword')">
+                <img src="https://mctiers.com/tier_icons/sword.svg" class="category-icon">
+                <span class="category-name">Sword</span>
+            </div>
+            <div class="category" onclick="openCategoryModal('uhc')">
+                <img src="https://mctiers.com/tier_icons/uhc.svg" class="category-icon">
+                <span class="category-name">UHC</span>
+            </div>
+        </div>
+
         <div class="search-bar">
             <i class="fas fa-search"></i>
             <input type="text" id="search-input" placeholder="🔍 Buscar jugador...">
@@ -288,6 +451,27 @@
                 <span>Puntos</span>
             </div>
             <div id="players-list"></div>
+        </div>
+    </div>
+
+    <!-- Modal para mostrar jugadores por categoría y tier -->
+    <div class="modal" id="category-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Categoría</h2>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="tier-tabs" id="tier-tabs">
+                <div class="tier-tab active" data-tier="all">Todos</div>
+                <div class="tier-tab" data-tier="1">Tier 1</div>
+                <div class="tier-tab" data-tier="2">Tier 2</div>
+                <div class="tier-tab" data-tier="3">Tier 3</div>
+                <div class="tier-tab" data-tier="4">Tier 4</div>
+                <div class="tier-tab" data-tier="5">Tier 5</div>
+            </div>
+            <div class="tier-players" id="tier-players">
+                <!-- Jugadores se mostrarán aquí -->
+            </div>
         </div>
     </div>
 
@@ -1508,11 +1692,19 @@
 
         ];
 
-        function displayPlayers(playerList = players) {
+         function displayPlayers(playerList = players) {
             const playersList = document.getElementById('players-list');
             playersList.innerHTML = '';
 
             const sortedPlayers = [...playerList].sort((a, b) => b.puntos - a.puntos);
+
+            // Objeto con las URLs de las imágenes para cada subcategoría
+            const subcategoryIcons = {
+                nethpot: 'https://mctiers.com/tier_icons/nethop.svg',
+                crystal: 'https://mctiers.com/tier_icons/vanilla.svg',
+                sword: 'https://mctiers.com/tier_icons/sword.svg',
+                uhc: 'https://mctiers.com/tier_icons/uhc.svg'
+            };
 
             sortedPlayers.forEach((player, index) => {
                 const playerRow = document.createElement('div');
@@ -1547,13 +1739,24 @@
                     const subcat = document.createElement('div');
                     subcat.className = 'tier-subcategory';
                     
-                    const label = document.createElement('span');
-                    label.textContent = category;
+                    // Crear contenedor para el icono y el nombre
+                    const labelContainer = document.createElement('span');
+                    
+                    // Crear elemento de imagen para el icono
+                    const iconImg = document.createElement('img');
+                    iconImg.src = subcategoryIcons[category];
+                    iconImg.className = 'tier-icon';
+                    iconImg.alt = `${category} icon`;
+                    
+                    const labelText = document.createTextNode(category);
+                    
+                    labelContainer.appendChild(iconImg);
+                    labelContainer.appendChild(labelText);
                     
                     const value = document.createElement('span');
                     value.textContent = player.subTiers?.[category] || '-';
                     
-                    subcat.appendChild(label);
+                    subcat.appendChild(labelContainer);
                     subcat.appendChild(value);
                     tierSubcategories.appendChild(subcat);
                 });
@@ -1615,6 +1818,198 @@
             displayPlayers();
             createLeaves();
         });
+         // Función para convertir tier a número (LT1/HT1 = 1, LT2/HT2 = 2, etc.)
+    function tierToNumber(tier) {
+        if (!tier) return 0;
+        const tierNum = parseInt(tier.replace(/[^\d]/g, ''));
+        return tierNum || 0;
+    }
+
+    // Función para abrir el modal de categoría
+    function openCategoryModal(category) {
+        const modal = document.getElementById('category-modal');
+        const modalTitle = document.getElementById('modal-title');
+        
+        // Configurar título según la categoría
+        const categoryNames = {
+            'all': 'Todos los jugadores',
+            'nethpot': 'Nethpot',
+            'crystal': 'Crystal',
+            'sword': 'Sword',
+            'uhc': 'UHC'
+        };
+        modalTitle.textContent = categoryNames[category];
+        
+        // Guardar la categoría seleccionada en el modal
+        modal.dataset.category = category;
+        
+        // Mostrar todos los jugadores inicialmente
+        showPlayersByTier(category, 'all');
+        
+        // Mostrar el modal
+        modal.style.display = 'flex';
+    }
+
+    // Función para mostrar jugadores por tier
+    function showPlayersByTier(category, tier) {
+        const tierPlayersContainer = document.getElementById('tier-players');
+        tierPlayersContainer.innerHTML = '';
+        
+        // Filtrar jugadores según categoría y tier
+        let filteredPlayers = players.filter(player => {
+            if (category === 'all') return true; // Mostrar todos si es "all"
+            
+            const playerTier = player.subTiers[category];
+            if (!playerTier) return false; // Si no tiene tier en esta categoría
+            
+            if (tier === 'all') return true; // Mostrar todos los tiers si es "all"
+            
+            const tierNum = tierToNumber(playerTier);
+            return tierNum === parseInt(tier);
+        });
+        
+        // Ordenar por puntos descendente
+        filteredPlayers.sort((a, b) => b.puntos - a.puntos);
+        
+        // Mostrar jugadores en el modal
+        filteredPlayers.forEach(player => {
+            const playerElement = document.createElement('div');
+            playerElement.className = 'tier-player';
+            
+            const avatar = document.createElement('img');
+            avatar.className = 'tier-player-avatar';
+            avatar.src = player.premium 
+                ? `https://mc-heads.net/avatar/${encodeURIComponent(player.nick)}/32` 
+                : 'https://mc-heads.net/avatar/MHF_Steve/32';
+            avatar.onerror = () => avatar.src = 'https://mc-heads.net/avatar/MHF_Steve/32';
+            
+            const playerInfo = document.createElement('div');
+            playerInfo.innerHTML = `
+                <span>${player.nick}</span>
+                <span class="tier-badge">${player.subTiers[category] || '-'}</span>
+            `;
+            
+            playerElement.appendChild(avatar);
+            playerElement.appendChild(playerInfo);
+            tierPlayersContainer.appendChild(playerElement);
+        });
+    }
+
+    // Evento para los tabs de tiers
+    document.getElementById('tier-tabs').addEventListener('click', (e) => {
+        if (e.target.classList.contains('tier-tab')) {
+            // Remover clase 'active' de todos los tabs
+            document.querySelectorAll('.tier-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Agregar 'active' al tab clickeado
+            e.target.classList.add('active');
+            
+            // Obtener categoría y tier seleccionados
+            const modal = document.getElementById('category-modal');
+            const category = modal.dataset.category;
+            const tier = e.target.dataset.tier;
+            
+            // Mostrar jugadores filtrados
+            showPlayersByTier(category, tier);
+        }
+    });
+
+    // Función para cerrar el modal
+    function closeModal() {
+        document.getElementById('category-modal').style.display = 'none';
+    }
+
+    // Mostrar jugadores en la tabla principal (tu función original)
+    function displayPlayers(playerList = players) {
+        const playersList = document.getElementById('players-list');
+        playersList.innerHTML = '';
+
+        const sortedPlayers = [...playerList].sort((a, b) => b.puntos - a.puntos);
+
+        sortedPlayers.forEach((player, index) => {
+            const playerRow = document.createElement('div');
+            playerRow.className = 'player-row';
+            
+            const avatarImg = document.createElement('img');
+            avatarImg.className = 'player-avatar';
+            avatarImg.src = player.premium 
+                ? `https://mc-heads.net/avatar/${encodeURIComponent(player.nick)}/32` 
+                : 'https://mc-heads.net/avatar/MHF_Steve/32';
+            avatarImg.onerror = function() {
+                this.src = 'https://mc-heads.net/avatar/MHF_Steve/32';
+            };
+            
+            const nameContainer = document.createElement('div');
+            nameContainer.className = 'player-name';
+            nameContainer.appendChild(avatarImg);
+            nameContainer.appendChild(document.createTextNode(player.nick));
+            
+            const tierContainer = document.createElement('div');
+            tierContainer.className = 'tier-container';
+            
+            const tierMain = document.createElement('div');
+            tierMain.className = 'tier-main';
+            tierMain.textContent = player.tier;
+            
+            const tierSubcategories = document.createElement('div');
+            tierSubcategories.className = 'tier-subcategories';
+            
+            ['nethpot', 'crystal', 'uhc', 'sword'].forEach(category => {
+                const subcat = document.createElement('div');
+                subcat.className = 'tier-subcategory';
+                
+                const label = document.createElement('span');
+                label.textContent = category;
+                
+                const value = document.createElement('span');
+                value.textContent = player.subTiers?.[category] || '-';
+                
+                subcat.appendChild(label);
+                subcat.appendChild(value);
+                tierSubcategories.appendChild(subcat);
+            });
+            
+            tierContainer.appendChild(tierMain);
+            tierContainer.appendChild(tierSubcategories);
+            
+            playerRow.innerHTML = `
+                <span>${index + 1}</span>
+                <span></span>
+                <span>${player.region}</span>
+                <span></span>
+                <span>${player.puntos}</span>
+            `;
+            
+            playerRow.children[1].appendChild(nameContainer);
+            playerRow.children[3].appendChild(tierContainer);
+            playersList.appendChild(playerRow);
+        });
+    }
+
+    // Inicializar la tabla al cargar la página
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.querySelector('.loader').style.opacity = '0';
+            setTimeout(() => {
+                document.querySelector('.loader').style.display = 'none';
+            }, 500);
+        }, 3000);
+        
+        displayPlayers();
+    });
+
+    // Búsqueda de jugadores (tu función original)
+    document.getElementById('search-input').addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const filteredPlayers = players.filter(player => 
+            player.nick.toLowerCase().includes(searchTerm) || 
+            player.region.toLowerCase().includes(searchTerm)
+        );
+        displayPlayers(filteredPlayers);
+    });
+</script>
     </script>
 </body>
 </html>
