@@ -8,15 +8,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@900&family=Oxanium:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-bg: #0D0D12;
-            --color-card: #1A1A24;
-            --color-primary: #00A1E6;
-            --color-highlight: #00F7FF;
+            --color-bg: #1a0a2a;
+            --color-card: #2a0a4a;
+            --color-primary: #9D50FF;
+            --color-highlight: #6E8EFB;
             --color-text: #E6F9FF;
             --rog-red: #ff0000;
             --gold: #FFD700;
             --silver: #C0C0C0;
             --bronze: #CD7F32;
+            --moon-purple: #9D50FF;
+            --moon-blue: #6E8EFB;
+            --discord-blurple: #5865F2;
         }
 
         * {
@@ -27,7 +30,7 @@
 
         body {
             font-family: 'Oxanium', sans-serif;
-            background: var(--color-bg);
+            background: linear-gradient(135deg, var(--color-bg), #0d061a);
             color: var(--color-text);
             min-height: 100vh;
             overflow-x: hidden;
@@ -65,8 +68,17 @@
         }
 
         @keyframes glow {
-            0%, 100% { box-shadow: 0 0 10px rgba(0, 247, 255, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(0, 247, 255, 0.8); }
+            0%, 100% { box-shadow: 0 0 10px rgba(157, 80, 255, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(157, 80, 255, 0.8); }
+        }
+
+        @keyframes moonGlow {
+            0%, 100% { 
+                text-shadow: 0 0 10px var(--moon-purple), 0 0 20px var(--moon-blue);
+            }
+            50% { 
+                text-shadow: 0 0 15px var(--moon-purple), 0 0 30px var(--moon-blue);
+            }
         }
 
         .loader {
@@ -87,8 +99,8 @@
         .loader-text {
             font-family: 'Kanit', sans-serif;
             font-size: 1.8rem;
-            color: var(--rog-red);
-            text-shadow: 0 0 10px var(--rog-red);
+            color: var(--moon-purple);
+            text-shadow: 0 0 10px var(--moon-purple);
             margin-bottom: 2rem;
             animation: fadeInGlow 1.5s ease-out, pulse 1.5s infinite;
         }
@@ -107,8 +119,8 @@
             left: 50%;
             transform-origin: top center;
             animation: swordSlash 1.2s ease-out forwards;
-            color: var(--rog-red);
-            text-shadow: 0 0 15px var(--rog-red);
+            color: var(--moon-purple);
+            text-shadow: 0 0 15px var(--moon-purple);
             z-index: 2;
         }
 
@@ -116,8 +128,8 @@
             position: absolute;
             width: 100%;
             height: 4px;
-            background: var(--rog-red);
-            box-shadow: 0 0 15px var(--rog-red);
+            background: var(--moon-purple);
+            box-shadow: 0 0 15px var(--moon-purple);
             top: 50%;
             left: 0;
             transform: scaleX(0);
@@ -147,7 +159,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent 48%, var(--rog-red) 48%, var(--rog-red) 52%, transparent 52%);
+            background: linear-gradient(45deg, transparent 48%, var(--moon-purple) 48%, var(--moon-purple) 52%, transparent 52%);
             opacity: 0;
             animation: cutReveal 0.8s ease-out 0.5s forwards;
         }
@@ -193,24 +205,61 @@
             overflow: hidden;
         }
 
-        /* Resto de tus estilos permanecen igual */
+        /* Navbar y logo */
         .navbar {
             padding: 1rem 2rem;
-            background: rgba(10, 10, 20, 0.8);
+            background: rgba(26, 10, 42, 0.8);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 247, 255, 0.1);
+            border-bottom: 1px solid rgba(157, 80, 255, 0.1);
             animation: fadeInGlow 1s ease-out;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
-            color: var(--color-highlight);
+            font-family: 'Kanit', sans-serif;
+            animation: moonGlow 3s infinite;
+            background: linear-gradient(90deg, var(--moon-purple), var(--moon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .logo i {
-            color: gold;
+            color: var(--moon-purple);
             margin-right: 10px;
+            text-shadow: 0 0 10px var(--moon-blue);
+        }
+
+        .discord-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--discord-blurple);
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .discord-btn:hover {
+            background: #4752c4;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+        }
+
+        .discord-btn i {
+            font-size: 1.2rem;
         }
 
         .container {
@@ -222,12 +271,18 @@
             animation-delay: 3s;
         }
 
+        /* Categorías estilo tierspvp.com */
         .categories-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
+            background: rgba(42, 10, 74, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(157, 80, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .category {
@@ -235,24 +290,41 @@
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            transition: transform 0.3s;
-            width: 80px;
+            transition: all 0.3s;
+            width: 100px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(157, 80, 255, 0.1);
+            border: 1px solid rgba(157, 80, 255, 0.2);
         }
 
         .category:hover {
-            transform: scale(1.1);
+            transform: translateY(-5px);
+            background: rgba(157, 80, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(157, 80, 255, 0.3);
+        }
+
+        .category.active {
+            background: rgba(157, 80, 255, 0.3);
+            border-color: var(--moon-purple);
         }
 
         .category-icon {
             width: 50px;
             height: 50px;
             object-fit: contain;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            border-radius: 50%;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(157, 80, 255, 0.3);
         }
 
         .category-name {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             text-align: center;
+            font-weight: bold;
+            color: var(--color-highlight);
         }
 
         .search-bar {
@@ -260,11 +332,11 @@
             margin: 2rem auto;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50px;
-            padding: 0.6rem 1.2rem;
+            padding: 0.8rem 1.5rem;
             display: flex;
             align-items: center;
             border: 1px solid var(--color-highlight);
-            box-shadow: 0 0 10px rgba(0, 247, 255, 0.2);
+            box-shadow: 0 0 15px rgba(110, 142, 251, 0.3);
         }
 
         .search-bar i {
@@ -277,8 +349,8 @@
             background: transparent;
             border: none;
             color: var(--color-text);
-            font-size: 0.9rem;
-            margin-left: 8px;
+            font-size: 1rem;
+            margin-left: 10px;
             outline: none;
         }
 
@@ -288,15 +360,17 @@
             background: var(--color-card);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(157, 80, 255, 0.2);
         }
 
         .table-header {
             display: grid;
             grid-template-columns: 50px 2fr 1fr 2fr 1fr;
             padding: 1rem;
-            background: rgba(0, 161, 230, 0.1);
+            background: linear-gradient(90deg, rgba(157, 80, 255, 0.2), transparent);
             font-weight: bold;
+            color: var(--color-highlight);
         }
 
         #players-list {
@@ -315,7 +389,7 @@
         }
 
         .player-row:hover {
-            background: rgba(0, 161, 230, 0.05);
+            background: rgba(157, 80, 255, 0.05);
             transform: translateY(-2px);
         }
 
@@ -347,7 +421,7 @@
         .player-row:hover .player-avatar {
             transform: scale(1.1);
             border-color: var(--color-highlight);
-            box-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+            box-shadow: 0 0 15px rgba(110, 142, 251, 0.5);
         }
 
         .player-name {
@@ -376,22 +450,65 @@
         .tier-subcategory {
             display: flex;
             flex-direction: column;
-        }
-
-        .tier-subcategory span:first-child {
-            font-size: 0.7rem;
-            color: var(--color-highlight);
-            display: flex;
             align-items: center;
-            gap: 4px;
         }
 
-        .tier-icon {
-            width: 16px;
-            height: 16px;
-            margin-right: 4px;
+        .tier-badge {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(157, 80, 255, 0.1);
+            border: 1px solid rgba(157, 80, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            padding: 5px;
         }
 
+        .tier-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 0%,
+                transparent 45%,
+                rgba(157, 80, 255, 0.3) 50%,
+                transparent 55%,
+                transparent 100%
+            );
+            animation: shine 3s infinite;
+            transform: rotate(30deg);
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        .tier-badge img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            z-index: 1;
+            margin-bottom: 2px;
+        }
+
+        .tier-value {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--color-highlight);
+            z-index: 1;
+            text-align: center;
+        }
+
+        /* Modal para mostrar jugadores por categoría y tier */
         .modal {
             display: none;
             position: fixed;
@@ -413,7 +530,8 @@
             max-width: 800px;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+            box-shadow: 0 0 30px rgba(157, 80, 255, 0.5);
+            border: 1px solid var(--moon-purple);
         }
 
         .modal-header {
@@ -426,6 +544,10 @@
         .modal-title {
             font-size: 1.5rem;
             color: var(--color-highlight);
+            background: linear-gradient(90deg, var(--moon-purple), var(--moon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .close-modal {
@@ -451,15 +573,17 @@
 
         .tier-tab {
             padding: 8px 15px;
-            background: rgba(0, 161, 230, 0.1);
+            background: rgba(157, 80, 255, 0.1);
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s;
+            border: 1px solid transparent;
         }
 
         .tier-tab:hover, .tier-tab.active {
-            background: var(--color-primary);
+            background: var(--moon-purple);
             transform: translateY(-2px);
+            border-color: var(--moon-blue);
         }
 
         .tier-players {
@@ -477,12 +601,14 @@
             border-radius: 5px;
             transition: all 0.3s;
             cursor: pointer;
+            border: 1px solid rgba(157, 80, 255, 0.1);
         }
 
         .tier-player:hover {
-            background: rgba(0, 161, 230, 0.1);
+            background: rgba(157, 80, 255, 0.1);
             transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-color: var(--moon-purple);
         }
 
         .tier-player-avatar {
@@ -493,15 +619,16 @@
             border: 2px solid var(--color-primary);
         }
 
-        .tier-badge {
+        .tier-badge-small {
             padding: 2px 6px;
-            background: rgba(0, 247, 255, 0.2);
+            background: rgba(157, 80, 255, 0.2);
             border-radius: 3px;
             font-size: 0.7rem;
             margin-left: auto;
+            color: var(--color-highlight);
         }
 
-        /* ========== ESTILOS PREMIUM PARA EL MODAL DE JUGADOR ========== */
+        /* Modal premium para información del jugador */
         .player-modal {
             display: none;
             position: fixed;
@@ -517,13 +644,13 @@
         }
 
         .player-modal-content {
-            background: linear-gradient(145deg, #1A1A24, #0F0F18);
+            background: linear-gradient(145deg, #2a0a4a, #1a0a2a);
             border-radius: 15px;
             padding: 30px;
             width: 90%;
             max-width: 700px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 247, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(157, 80, 255, 0.3);
             position: relative;
             overflow: hidden;
             animation: fadeInGlow 0.5s ease-out;
@@ -536,7 +663,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(0, 247, 255, 0.05) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 30%, rgba(157, 80, 255, 0.1) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -552,9 +679,13 @@
         .player-modal-title {
             font-size: 1.8rem;
             color: var(--color-highlight);
-            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+            text-shadow: 0 0 10px rgba(157, 80, 255, 0.5);
             font-family: 'Kanit', sans-serif;
             letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--moon-purple), var(--moon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .player-modal-body {
@@ -572,7 +703,7 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             padding: 20px;
-            border: 1px solid rgba(0, 247, 255, 0.1);
+            border: 1px solid rgba(157, 80, 255, 0.2);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.5s;
             animation: float 4s ease-in-out infinite;
@@ -583,13 +714,13 @@
             max-width: 250px;
             height: auto;
             border-radius: 5px;
-            filter: drop-shadow(0 0 10px rgba(0, 247, 255, 0.3));
+            filter: drop-shadow(0 0 10px rgba(157, 80, 255, 0.3));
             transition: all 0.3s;
         }
 
         .player-skin:hover {
             transform: scale(1.05);
-            filter: drop-shadow(0 0 15px rgba(0, 247, 255, 0.5));
+            filter: drop-shadow(0 0 15px rgba(157, 80, 255, 0.5));
         }
 
         .player-info {
@@ -610,7 +741,7 @@
         }
 
         .player-info-row:hover {
-            background: rgba(0, 161, 230, 0.1);
+            background: rgba(157, 80, 255, 0.1);
             border-left: 3px solid var(--color-highlight);
             transform: translateX(5px);
         }
@@ -636,7 +767,7 @@
             color: var(--color-highlight);
             margin-bottom: 15px;
             font-size: 1.2rem;
-            border-bottom: 1px solid rgba(0, 247, 255, 0.2);
+            border-bottom: 1px solid rgba(157, 80, 255, 0.2);
             padding-bottom: 5px;
         }
 
@@ -653,7 +784,7 @@
         }
 
         .player-tier:hover {
-            background: rgba(0, 161, 230, 0.1);
+            background: rgba(157, 80, 255, 0.1);
             transform: translateX(5px);
             border-left: 3px solid var(--color-highlight);
         }
@@ -662,7 +793,7 @@
             width: 24px;
             height: 24px;
             object-fit: contain;
-            filter: drop-shadow(0 0 5px rgba(0, 247, 255, 0.3));
+            filter: drop-shadow(0 0 5px rgba(157, 80, 255, 0.3));
         }
 
         .player-tier-category {
@@ -718,20 +849,20 @@
         }
 
         .player-modal-button {
-            background: linear-gradient(90deg, var(--color-primary), var(--color-highlight));
+            background: linear-gradient(90deg, var(--moon-purple), var(--moon-blue));
             border: none;
-            color: #000;
+            color: white;
             padding: 8px 20px;
             border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+            box-shadow: 0 0 15px rgba(157, 80, 255, 0.3);
         }
 
         .player-modal-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 247, 255, 0.5);
+            box-shadow: 0 5px 20px rgba(157, 80, 255, 0.5);
         }
 
         @media (max-width: 768px) {
@@ -797,14 +928,18 @@
 
     <nav class="navbar">
         <div class="logo">
-            <i class="fas fa-crown"></i>
+            <i class="fas fa-moon"></i>
             <span>Moon TierList</span>
         </div>
+        <a href="https://discord.gg/x3SKKqJzUg" class="discord-btn" target="_blank">
+            <i class="fab fa-discord"></i>
+            Discord
+        </a>
     </nav>
 
     <div class="container">
         <div class="categories-container">
-            <div class="category" onclick="openCategoryModal('all')">
+            <div class="category active" onclick="openCategoryModal('all')">
                 <img src="https://mctiers.com/tier_icons/vanilla.svg" class="category-icon">
                 <span class="category-name">Todos</span>
             </div>
@@ -906,8 +1041,6 @@
             </div>
         </div>
     </div>
-
-
 
     <script>
         // Datos de ejemplo completos con subtiers
@@ -2158,6 +2291,180 @@
                 premium: true 
             },
 
+            {
+                nick: "BruxisDrogado", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "HT4",
+                    sword: "HT4"
+                },
+                puntos: 11,
+                premium: true 
+            },
+
+             {
+                nick: "SLJBy", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "HT4",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 4,
+                premium: true 
+            },
+
+             {
+                nick: "1Humano", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 3,
+                premium: true 
+            },
+
+             {
+                nick: "raneFA", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT4",
+                    crystal: "",
+                    uhc: "LT3",
+                    sword: ""
+                },
+                puntos: 10,
+                premium: true 
+            },
+
+             {
+                nick: "Dolaino", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT3",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 6,
+                premium: true 
+            },
+
+             {
+                nick: "", 
+                region: "", 
+                tier: "",
+                subTiers: {
+                    nethpot: "",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: ,
+                premium: true 
+            },
+
+             {
+                nick: "pnaqueso", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 2,
+                premium: true 
+            },
+
+             {
+                nick: "zAres_", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT4",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 4,
+                premium: true 
+            },
+
+             {
+                nick: "elpepe182", 
+                region: "SA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "LT4",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 5,
+                premium: true 
+            },
+
+             {
+                nick: "uMars_", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 2,
+                premium: true 
+            },
+
+           {
+                nick: "uMars_", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "HT5",
+                    crystal: "",
+                    uhc: "",
+                    sword: ""
+                },
+                puntos: 2,
+                premium: true 
+            },
+
+                {
+                nick: "joaquin1827", 
+                region: "NA", 
+                tier: "",
+                subTiers: {
+                    nethpot: "LT4",
+                    crystal: "LT3",
+                    uhc: "LT2",
+                    sword: "LT3"
+                },
+                puntos: 35,
+                premium: true 
+            },
+
+
+            
+
+            
+
+            
             ];
 
         // ========== FUNCIÓN PRINCIPAL ==========
@@ -2200,27 +2507,27 @@
                 const tierSubcategories = document.createElement('div');
                 tierSubcategories.className = 'tier-subcategories';
                 
-                // Subcategorías con iconos
+                // Subcategorías con badges estilo tierspvp.com
                 ['nethpot', 'crystal', 'uhc', 'sword'].forEach(category => {
                     const subcat = document.createElement('div');
                     subcat.className = 'tier-subcategory';
                     
-                    // Etiqueta con icono
-                    const label = document.createElement('span');
+                    // Badge con imagen y tier
+                    const badge = document.createElement('div');
+                    badge.className = 'tier-badge';
+                    
                     const icon = document.createElement('img');
                     icon.src = subcategoryIcons[category];
-                    icon.className = 'tier-icon';
                     icon.alt = category;
                     
-                    label.appendChild(icon);
-                    label.appendChild(document.createTextNode(category));
-                    
-                    // Valor del tier
-                    const value = document.createElement('span');
+                    const value = document.createElement('div');
+                    value.className = 'tier-value';
                     value.textContent = player.subTiers?.[category] || '-';
                     
-                    subcat.appendChild(label);
-                    subcat.appendChild(value);
+                    badge.appendChild(icon);
+                    badge.appendChild(value);
+                    subcat.appendChild(badge);
+                    
                     tierSubcategories.appendChild(subcat);
                 });
                 
@@ -2405,7 +2712,7 @@
                 nameSpan.textContent = player.nick;
                 
                 const tierSpan = document.createElement('span');
-                tierSpan.className = 'tier-badge';
+                tierSpan.className = 'tier-badge-small';
                 tierSpan.textContent = player.subTiers?.[category] || '-';
                 
                 playerInfo.appendChild(nameSpan);
