@@ -215,6 +215,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .logo {
@@ -239,13 +240,16 @@
         .nav-buttons {
             display: flex;
             gap: 10px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .nav-btn {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 16px;
+            padding: 10px 20px;
             background: var(--moon-purple);
             border-radius: 5px;
             color: white;
@@ -254,7 +258,9 @@
             transition: all 0.3s;
             border: none;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            min-width: 140px;
+            justify-content: center;
         }
 
         .nav-btn:hover {
@@ -265,6 +271,14 @@
 
         .nav-btn i {
             font-size: 1.2rem;
+        }
+
+        .discord-btn {
+            background: var(--discord-blurple);
+        }
+
+        .discord-btn:hover {
+            background: #4752c4;
         }
 
         .container {
@@ -446,7 +460,7 @@
 
         .tier-subcategories {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 8px;
             font-size: 0.8rem;
             color: rgba(230, 249, 255, 0.7);
@@ -944,6 +958,19 @@
         }
 
         @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 1rem;
+            }
+            
+            .nav-buttons {
+                position: static;
+                transform: none;
+                width: 100%;
+                justify-content: center;
+            }
+            
             .search-bar {
                 width: 90%;
             }
@@ -955,7 +982,7 @@
                 grid-template-columns: 50px 150px 80px 200px 80px;
             }
             .tier-subcategories {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
             .modal-content {
                 width: 95%;
@@ -1023,7 +1050,7 @@
                 <i class="fas fa-users"></i>
                 Moon Staff
             </button>
-            <a href="https://discord.gg/x3SKKqJzUg" class="nav-btn" target="_blank">
+            <a href="https://discord.gg/x3SKKqJzUg" class="nav-btn discord-btn" target="_blank">
                 <i class="fab fa-discord"></i>
                 Discord
             </a>
@@ -1051,6 +1078,10 @@
             <div class="category" onclick="openCategoryModal('uhc')">
                 <img src="https://mctiers.com/tier_icons/uhc.svg" class="category-icon">
                 <span class="category-name">UHC</span>
+            </div>
+            <div class="category" onclick="openCategoryModal('mace')">
+                <img src="https://mctiers.com/tier_icons/mace.svg" class="category-icon">
+                <span class="category-name">Mace</span>
             </div>
         </div>
 
@@ -1213,10 +1244,6 @@
                         <span class="staff-name">inefqblee</span>
                     </div>
                     <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/StyleOfSeasson?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">StyleOfSeasson</span>
-                    </div>
-                    <div class="staff-member">
                         <img src="https://render.crafty.gg/3d/bust/TwxMex_?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
                         <span class="staff-name">TwxMex_</span>
                     </div>
@@ -1304,345 +1331,58 @@
             </div>
         </div>
     </div>
-    <script>
-        // Datos de ejemplo completos con subtiers
-        const players = [
+     <script>
         
-           [
-    { 
-        nick: "ivancosmicmihijo", 
-        region: "NA", 
-        subTiers: { mace: "HT4" },
-        puntos: 4, // HT4 = 4
-        premium: true 
-    },
-    { 
-        nick: "donyayo", 
-        region: "NA", 
-        subTiers: { sword: "LT4" },
-        puntos: 3, // LT4 = 3
-        premium: true 
-    },
-    { 
-        nick: "FreshIvanF4", 
-        region: "NA", 
-        subTiers: { uhc: "HT4" },
-        puntos: 4, // HT4 = 4
-        premium: true 
-    },
-    { 
-        nick: "_Cucarachin", 
-        region: "NA", 
-        subTiers: { nethpot: "HT4", crystal: "HT5" },
-        puntos: 6, // HT4(4) + HT5(2)
-        premium: true 
-    },
-    { 
-        nick: "skibidilmz", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4", sword: "LT4", mace: "LT5" },
-        puntos: 7, // LT4(3) + LT4(3) + LT5(1)
-        premium: true 
-    },
-    { 
-        nick: "maikelaalexander", 
-        region: "NA", 
-        subTiers: { nethpot: "HT5" },
-        puntos: 2, // HT5 = 2
-        premium: true 
-    },
-    { 
-        nick: "el_cheba", 
-        region: "NA", 
-        subTiers: { sword: "HT5", nethpot: "LT5", crystal: "LT5", mace: "LT5" },
-        puntos: 5, // HT5(2) + LT5(1) + LT5(1) + LT5(1)
-        premium: true 
-    },
-    { 
-        nick: "itzk1ng", 
-        region: "NA", 
-        subTiers: { nethpot: "HT5", mace: "HT4" },
-        puntos: 6, // HT5(2) + HT4(4)
-        premium: true 
-    },
-    { 
-        nick: "ixzVexxa", 
-        region: "NA", 
-        subTiers: { nethpot: "LT3", sword: "LT3", uhc: "HT5", crystal: "HT5", mace: "HT5" },
-        puntos: 18, // LT3(5) + LT3(5) + HT5(2) + HT5(2) + HT5(2) + HT5(2)
-        premium: true 
-    },
-    { 
-        nick: "conterstine3923", 
-        region: "EU", 
-        subTiers: { nethpot: "HT5", crystal: "HT5", sword: "HT5", uhc: "LT5", mace: "LT5" },
-        puntos: 8, // HT5(2) + HT5(2) + HT5(2) + LT5(1) + LT5(1)
-        premium: true 
-    },
-    { 
-        nick: "snowpiplup", 
-        region: "NA", 
-        subTiers: { uhc: "LT3", mace: "HT4" },
-        puntos: 9, // LT3(5) + HT4(4)
-        premium: true 
-    },
-    { 
-        nick: "Darwin_AC", 
-        region: "SA", 
-        subTiers: { nethpot: "HT5" },
-        puntos: 2, // HT5 = 2
-        premium: true 
-    },
-    { 
-        nick: "zvnny_", 
-        region: "SA", 
-        subTiers: { nethpot: "HT5" },
-        puntos: 2, // HT5 = 2
-        premium: true 
-    },
-    { 
-        nick: "DG6103", 
-        region: "SA", 
-        subTiers: { nethpot: "LT4", crystal: "LT5" },
-        puntos: 4, // LT4(3) + LT5(1)
-        premium: true 
-    },
-    { 
-        nick: "onloadL0o", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4" },
-        puntos: 3, // LT4 = 3
-        premium: true 
-    },
-    { 
-        nick: "uwu407152", 
-        region: "SA", 
-        subTiers: { crystal: "LT5" },
-        puntos: 1, // LT5 = 1
-        premium: true 
-    },
-    { 
-        nick: "Arzkhz", 
-        region: "NA", 
-        subTiers: { nethpot: "HT4", sword: "LT4", uhc: "LT5", mace: "LT5", crystal: "LT5" },
-        puntos: 11, // HT4(4) + LT4(3) + LT5(1) + LT5(1) + LT5(1) + LT5(1)
-        premium: true 
-    },
-    { 
-        nick: "HolaRegez", 
-        region: "NA", 
-        subTiers: { nethpot: "HT4", sword: "HT5", uhc: "LT5", crystal: "LT5", mace: "LT5" },
-        puntos: 10, // HT4(4) + HT5(2) + LT5(1) + LT5(1) + LT5(1) + LT5(1)
-        premium: true 
-    },
-    { 
-        nick: "Peter_K1ng", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4" },
-        puntos: 3, // LT4 = 3
-        premium: true 
-    },
-    { 
-        nick: "zrennxz", 
-        region: "NA", 
-        subTiers: { crystal: "HT5" },
-        puntos: 2, // HT5 = 2
-        premium: true 
-    },
-    { 
-        nick: "ZZZN00B", 
-        region: "SA", 
-        subTiers: { crystal: "LT4" },
-        puntos: 3, // LT4 = 3
-        premium: true 
-    },
-    { 
-        nick: "Kichero", 
-        region: "EU", 
-        subTiers: { nethpot: "HT4", sword: "HT4" },
-        puntos: 8, // HT4(4) + HT4(4)
-        premium: true 
-    },
-    { 
-        nick: "rpztm", 
-        region: "NA", 
-        subTiers: { nethpot: "HT5" },
-        puntos: 2, // HT5 = 2
-        premium: true 
-    },
-    { 
-        nick: "Alonex1", 
-        region: "NA", 
-        subTiers: { nethpot: "LT5" },
-        puntos: 1, // LT5 = 1
-        premium: true 
-    },
-    { 
-        nick: "ItzThing_", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4" },
-        puntos: 3, // LT4 = 3
-        premium: true 
-    },
-    { 
-        nick: "Alqcrit", 
-        region: "NA", 
-        subTiers: { nethpot: "HT4" },
-        puntos: 4, // HT4 = 4
-        premium: true 
-    },
-    { 
-        nick: "PollonSiinhoo", 
-        region: "NA", 
-        subTiers: { nethpot: "HT4" },
-        puntos: 4, // HT4 = 4
-        premium: true 
-    },
-    { 
-        nick: "PollónNutria", 
-        region: "NA", 
-        subTiers: { nethpot: "HT4" },
-        puntos: 4, // HT4 = 4
-        premium: true 
-    },
-    { 
-        nick: "iKissYou_", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4", crystal: "HT4" },
-        puntos: 7, // LT4(3) + HT4(4)
-        premium: true 
-    },
-    { 
-        nick: "reticience", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4", uhc: "HT5", crystal: "HT5", mace: "LT5" },
-        puntos: 10, // LT4(3) + HT5(2) + HT5(2) + LT5(1) + LT5(1)
-        premium: true 
-    },
-    { 
-        nick: "Matz15_", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4" },
-        puntos: 3, // LT4 = 3
-        premium: true 
-    },
-    { 
-        nick: "ixzWraith", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4" },
-        puntos: 3, // LT4 = 3
-        premium: true 
-    },
-    { 
-        nick: "ItzCreedMe_", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4" },
-        puntos: 3, // LT4 = 3
-        premium: true 
-    },
-    { 
-        nick: "franco_AS", 
-        region: "SA", 
-        subTiers: { nethpot: "LT5" },
-        puntos: 1, // LT5 = 1
-        premium: true 
-    },
-    { 
-        nick: "Fabribg", 
-        region: "SA", 
-        subTiers: { nethpot: "LT5" },
-        puntos: 1, // LT5 = 1
-        premium: true 
-    },
-    { 
-        nick: "rzdrxgo", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4" },
-        puntos: 3, // LT4 = 3
-        premium: true 
-    },
-    { 
-        nick: "bestmexico", 
-        region: "NA", 
-        subTiers: { nethpot: "HT4" },
-        puntos: 4, // HT4 = 4
-        premium: true 
-    },
-    { 
-        nick: "Branland07", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4" },
-        puntos: 3, // LT4 = 3
-        premium: true 
-    },
-    { 
-        nick: "iDurelRs_", 
-        region: "NA", 
-        subTiers: { nethpot: "HT4" },
-        puntos: 4, // HT4 = 4
-        premium: true 
-    },
-    { 
-        nick: "Ecunem", 
-        region: "NA", 
-        subTiers: { nethpot: "LT3", sword: "HT4" },
-        puntos: 9, // LT3(5) + HT4(4)
-        premium: true 
-    },
-    { 
-        nick: "PXOJA", 
-        region: "", 
-        subTiers: { nethpot: "HT4", sword: "LT3" },
-        puntos: 9, // HT4(4) + LT3(5)
-        premium: true 
-    },
-    { 
-        nick: "TwxMex", 
-        region: "", 
-        subTiers: { nethpot: "LT3", sword: "HT5" },
-        puntos: 7, // LT3(5) + HT5(2)
-        premium: true 
-    },
-    { 
-        nick: "vKayzer", 
-        region: "NA", 
-        subTiers: { nethpot: "HT4", sword: "LT3" },
-        puntos: 9, // HT4(4) + LT3(5)
-        premium: true 
-    },
-    { 
-        nick: "ImJxkl", 
-        region: "NA", 
-        subTiers: { nethpot: "HT4", sword: "LT4" },
-        puntos: 7, // HT4(4) + LT4(3)
-        premium: true 
-    },
-    { 
-        nick: "nczb", 
-        region: "NA", 
-        subTiers: { nethpot: "LT4", crystal: "HT4" },
-        puntos: 7, // LT4(3) + HT4(4)
-        premium: true 
-    },
-    { 
-        nick: "vExhzy", 
-        region: "NA", 
-        subTiers: { nethpot: "HT4", crystal: "HT3" },
-        puntos: 14, // HT4(4) + HT3(10)
-        premium: true 
-    },
-    { 
-        nick: "sPalomita", 
-        region: "SA", 
-        subTiers: { nethpot: "HT4", sword: "LT3" },
-        puntos: 9, // HT4(4) + LT3(5)
-        premium: true 
-    }
-               
-    ]
-           
-            
-            ];
+        // Datos de ejemplo completos con subtiers
+   const players = [
+    { nick: "ivancosmicmihijo", region: "NA", subTiers: { mace: "HT4" }, puntos: 4, premium: true },
+    { nick: "donyayo", region: "NA", subTiers: { sword: "LT4" }, puntos: 3, premium: true },
+    { nick: "FreshIvanF4", region: "NA", subTiers: { uhc: "HT4" }, puntos: 4, premium: true },
+    { nick: "_Cucarachin", region: "NA", subTiers: { nethpot: "HT4", crystal: "HT5" }, puntos: 6, premium: true },
+    { nick: "skibidilmz", region: "NA", subTiers: { nethpot: "LT4", sword: "LT4", mace: "LT5" }, puntos: 7, premium: true },
+    { nick: "maikelaalexander", region: "NA", subTiers: { nethpot: "HT5" }, puntos: 2, premium: true },
+    { nick: "el_cheba", region: "NA", subTiers: { sword: "HT5", nethpot: "LT5", crystal: "LT5", mace: "LT5" }, puntos: 5, premium: true },
+    { nick: "itzk1ng", region: "NA", subTiers: { nethpot: "HT5", mace: "HT4" }, puntos: 6, premium: true },
+    { nick: "ixzVexxa", region: "NA", subTiers: { nethpot: "LT3", sword: "LT3", uhc: "HT5", crystal: "HT5", mace: "HT5" }, puntos: 18, premium: true },
+    { nick: "conterstine3923", region: "EU", subTiers: { nethpot: "HT5", crystal: "HT5", sword: "HT5", uhc: "LT5", mace: "LT5" }, puntos: 8, premium: true },
+    { nick: "snowpiplup", region: "NA", subTiers: { uhc: "LT3", mace: "HT4" }, puntos: 9, premium: true },
+    { nick: "Darwin_AC", region: "SA", subTiers: { nethpot: "HT5" }, puntos: 2, premium: true },
+    { nick: "zvnny_", region: "SA", subTiers: { nethpot: "HT5" }, puntos: 2, premium: true },
+    { nick: "DG6103", region: "SA", subTiers: { nethpot: "LT4", crystal: "LT5" }, puntos: 4, premium: true },
+    { nick: "onloadL0o", region: "NA", subTiers: { nethpot: "LT4" }, puntos: 3, premium: true },
+    { nick: "uwu407152", region: "SA", subTiers: { crystal: "LT5" }, puntos: 1, premium: true },
+    { nick: "Arzkhz", region: "NA", subTiers: { nethpot: "HT4", sword: "LT4", uhc: "LT5", mace: "LT5", crystal: "LT5" }, puntos: 11, premium: true },
+    { nick: "HolaRegez", region: "NA", subTiers: { nethpot: "HT4", sword: "HT5", uhc: "LT5", crystal: "LT5", mace: "LT5" }, puntos: 10, premium: true },
+    { nick: "Peter_K1ng", region: "NA", subTiers: { nethpot: "LT4" }, puntos: 3, premium: true },
+    { nick: "zrennxz", region: "NA", subTiers: { crystal: "HT5" }, puntos: 2, premium: true },
+    { nick: "ZZZN00B", region: "SA", subTiers: { crystal: "LT4" }, puntos: 3, premium: true },
+    { nick: "Kichero", region: "EU", subTiers: { nethpot: "HT4", sword: "HT4" }, puntos: 8, premium: true },
+    { nick: "rpztm", region: "NA", subTiers: { nethpot: "HT5" }, puntos: 2, premium: true },
+    { nick: "Alonex1", region: "NA", subTiers: { nethpot: "LT5" }, puntos: 1, premium: true },
+    { nick: "ItzThing_", region: "NA", subTiers: { nethpot: "LT4" }, puntos: 3, premium: true },
+    { nick: "Alqcrit", region: "NA", subTiers: { nethpot: "HT4" }, puntos: 4, premium: true },
+    { nick: "PollonSiinhoo", region: "NA", subTiers: { nethpot: "HT4" }, puntos: 4, premium: true },
+    { nick: "PollónNutria", region: "NA", subTiers: { nethpot: "HT4" }, puntos: 4, premium: true },
+    { nick: "iKissYou_", region: "NA", subTiers: { nethpot: "LT4", crystal: "HT4" }, puntos: 7, premium: true },
+    { nick: "reticience", region: "NA", subTiers: { nethpot: "LT4", uhc: "HT5", crystal: "HT5", mace: "LT5" }, puntos: 10, premium: true },
+    { nick: "Matz15_", region: "NA", subTiers: { nethpot: "LT4" }, puntos: 3, premium: true },
+    { nick: "ixzWraith", region: "NA", subTiers: { nethpot: "LT4" }, puntos: 3, premium: true },
+    { nick: "ItzCreedMe_", region: "NA", subTiers: { nethpot: "LT4" }, puntos: 3, premium: true },
+    { nick: "franco_AS", region: "SA", subTiers: { nethpot: "LT5" }, puntos: 1, premium: true },
+    { nick: "Fabribg", region: "SA", subTiers: { nethpot: "LT5" }, puntos: 1, premium: true },
+    { nick: "rzdrxgo", region: "NA", subTiers: { nethpot: "LT4" }, puntos: 3, premium: true },
+    { nick: "bestmexico", region: "NA", subTiers: { nethpot: "HT4" }, puntos: 4, premium: true },
+    { nick: "Branland07", region: "NA", subTiers: { nethpot: "LT4" }, puntos: 3, premium: true },
+    { nick: "iDurelRs_", region: "NA", subTiers: { nethpot: "HT4" }, puntos: 4, premium: true },
+    { nick: "Ecunem", region: "NA", subTiers: { nethpot: "LT3", sword: "HT4" }, puntos: 9, premium: true },
+    { nick: "PXOJA", region: "", subTiers: { nethpot: "HT4", sword: "LT3" }, puntos: 9, premium: true },
+    { nick: "TwxMex", region: "", subTiers: { nethpot: "LT3", sword: "HT5" }, puntos: 7, premium: true },
+    { nick: "vKayzer", region: "NA", subTiers: { nethpot: "HT4", sword: "LT3" }, puntos: 9, premium: true },
+    { nick: "ImJxkl", region: "NA", subTiers: { nethpot: "HT4", sword: "LT4" }, puntos: 7, premium: true },
+    { nick: "nczb", region: "NA", subTiers: { nethpot: "LT4", crystal: "HT4" }, puntos: 7, premium: true },
+    { nick: "vExhzy", region: "NA", subTiers: { nethpot: "HT4", crystal: "HT3" }, puntos: 14, premium: true },
+    { nick: "sPalomita", region: "SA", subTiers: { nethpot: "HT4", sword: "LT3" }, puntos: 9, premium: true }
+];
         // ========== FUNCIÓN PRINCIPAL ==========
         function displayPlayers(playerList = players) {
             const playersList = document.getElementById('players-list');
@@ -1655,7 +1395,8 @@
                 nethpot: 'https://mctiers.com/tier_icons/nethop.svg',
                 crystal: 'https://mctiers.com/tier_icons/vanilla.svg',
                 sword: 'https://mctiers.com/tier_icons/sword.svg',
-                uhc: 'https://mctiers.com/tier_icons/uhc.svg'
+                uhc: 'https://mctiers.com/tier_icons/uhc.svg',
+                mace: 'https://mctiers.com/tier_icons/mace.svg'
             };
 
             sortedPlayers.forEach((player, index) => {
@@ -1684,7 +1425,7 @@
                 tierSubcategories.className = 'tier-subcategories';
                 
                 // Subcategorías con badges estilo tierspvp.com
-                ['nethpot', 'crystal', 'uhc', 'sword'].forEach(category => {
+                ['nethpot', 'crystal', 'uhc', 'sword', 'mace'].forEach(category => {
                     const subcat = document.createElement('div');
                     subcat.className = 'tier-subcategory';
                     
@@ -1779,11 +1520,12 @@
                 nethpot: 'https://mctiers.com/tier_icons/nethop.svg',
                 crystal: 'https://mctiers.com/tier_icons/vanilla.svg',
                 sword: 'https://mctiers.com/tier_icons/sword.svg',
-                uhc: 'https://mctiers.com/tier_icons/uhc.svg'
+                uhc: 'https://mctiers.com/tier_icons/uhc.svg',
+                mace: 'https://mctiers.com/tier_icons/mace.svg'
             };
             
             // Mostrar todos los tiers con estilos diferentes según el tier
-            ['nethpot', 'crystal', 'uhc', 'sword'].forEach(category => {
+            ['nethpot', 'crystal', 'uhc', 'sword', 'mace'].forEach(category => {
                 const tierValue = player.subTiers?.[category] || '';
                 const tierNumber = tierValue ? parseInt(tierValue.replace(/\D/g, '')) || 0 : 0;
                 
@@ -1842,7 +1584,8 @@
                 'nethpot': 'Nethpot',
                 'crystal': 'Crystal',
                 'sword': 'Sword',
-                'uhc': 'UHC'
+                'uhc': 'UHC',
+                'mace': 'Mace'
             };
             
             modalTitle.textContent = titles[category] || 'Categoría';
