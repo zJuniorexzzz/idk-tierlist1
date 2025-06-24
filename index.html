@@ -1334,7 +1334,7 @@
      <script>
         
         // Datos de ejemplo completos con subtiers
-   const players = [
+  const players = [
     { nick: "ivancosmicmihijo", region: "NA", subTiers: { mace: "HT4" }, puntos: 4, premium: true },
     { nick: "donyayo", region: "NA", subTiers: { sword: "LT4" }, puntos: 3, premium: true },
     { nick: "FreshIvanF4", region: "NA", subTiers: { uhc: "HT4" }, puntos: 4, premium: true },
@@ -1381,7 +1381,50 @@
     { nick: "ImJxkl", region: "NA", subTiers: { nethpot: "HT4", sword: "LT4" }, puntos: 7, premium: true },
     { nick: "nczb", region: "NA", subTiers: { nethpot: "LT4", crystal: "HT4" }, puntos: 7, premium: true },
     { nick: "vExhzy", region: "NA", subTiers: { nethpot: "HT4", crystal: "HT3" }, puntos: 14, premium: true },
-    { nick: "sPalomita", region: "SA", subTiers: { nethpot: "HT4", sword: "LT3" }, puntos: 9, premium: true }
+    { nick: "sPalomita", region: "SA", subTiers: { nethpot: "HT4", sword: "LT3" }, puntos: 9, premium: true },
+    // Nuevos jugadores añadidos:
+    { 
+        nick: "SillyJoaquin", 
+        region: "SA", 
+        subTiers: { uhc: "LT2", crystal: "LT3", sword: "LT3", nethpot: "LT4" }, 
+        puntos: 33, // LT2(20) + LT3(5) + LT3(5) + LT4(3)
+        premium: true 
+    },
+    { 
+        nick: "_LuisSigmaBoyFa_", 
+        region: "NA", 
+        subTiers: { uhc: "HT3", sword: "LT3", nethpot: "HT4" }, 
+        puntos: 19, // HT3(10) + LT3(5) + HT4(4)
+        premium: true 
+    },
+    { 
+        nick: "DxstrES", 
+        region: "NA", 
+        subTiers: { sword: "HT3", uhc: "LT3", nethpot: "LT4" }, 
+        puntos: 18, // HT3(10) + LT3(5) + LT4(3)
+        premium: true 
+    },
+    { 
+        nick: "WatonDeOro", 
+        region: "NA", 
+        subTiers: { nethpot: "HT3", sword: "LT3" }, 
+        puntos: 15, // HT3(10) + LT3(5)
+        premium: true 
+    },
+    { 
+        nick: "gatox2903", 
+        region: "SA", 
+        subTiers: { sword: "HT3", uhc: "LT3" }, 
+        puntos: 15, // HT3(10) + LT3(5)
+        premium: true 
+    },
+    { 
+        nick: "lnnow", 
+        region: "NA", 
+        subTiers: { crystal: "HT3" }, 
+        puntos: 10, // HT3(10)
+        premium: true 
+    }
 ];
         // ========== FUNCIÓN PRINCIPAL ==========
         function displayPlayers(playerList = players) {
