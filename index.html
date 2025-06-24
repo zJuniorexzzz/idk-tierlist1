@@ -1307,1360 +1307,338 @@
     <script>
         // Datos de ejemplo completos con subtiers
         const players = [
-            { 
-                nick: "asdawer", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "LT4",
-                    uhc: "LT3",
-                    sword: "LT3"
-                },
-                puntos: 18,
-                premium: true
-            },
-            
-          
-           
-            { 
-                nick: " WholsNash", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "LT4",
-                    uhc: "",
-                    sword: "LT4"
-                },
-                puntos: 6,
-                premium: true 
-            },
-            
-            { 
-                nick: "SirHyrule_", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-            
-            { 
-                nick: " SweaterWeather", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-            
-            { 
-                nick: "isNotPablo", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-            
-            { 
-                nick: "SerNoob51", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-            
-            { 
-                nick: " Xsasvinho_", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-            
-            { 
-                nick: " ahlzeimer", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-            
-            { 
-                nick: " HqkpReptile_", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-            
-            { 
-                nick: "hijodesactive_", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "LT4",
-                    uhc: "HT5",
-                    sword: "HT5"
-                },
-                puntos: 9,
-                premium: true 
-            },
-            
-            { 
-                nick: "lat", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "HT5",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 4,
-                premium: true 
-            },
-            
-            { 
-                nick: "zLiv3r", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "HT4",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 4,
-                premium: true 
-            },
-            
-            { 
-                nick: "aLarrYam_", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 4,
-                premium: true 
-            },
-            
-            { 
-                nick: "Papugamer777556", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "LT4",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 5,
-                premium: true 
-            },
-            
-            { 
-                nick: "iOver_Vol —", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT3",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-            
-            { 
-                nick: " ElixWz", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-            
-            { 
-                nick: "Vic3rtz", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "HT3",
-                    sword: "LT3"
-                },
-                puntos: 18,
-                premium: true 
-            },
-            
-            { 
-                nick: " Adolfo951", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "HT4",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 7,
-                premium: true 
-            },
-            
-            { 
-                nick: "_Sowzy", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT3",
-                    crystal: "",
-                    uhc: "HT5",
-                    sword: "LT4"
-                },
-                puntos: 11,
-                premium: true 
-            },
-            
-            { 
-                nick: "zToks", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "LT3",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-            
-            { 
-                nick: "  RegetPlace372", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "LT4",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-
-            { 
-                nick: " imxstrone", 
-                region: "", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-
-            { 
-                nick: " Panza09", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT3",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-
-            { 
-                nick: " DxstrFA", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "LT3",
-                    sword: "HT3"
-                },
-                puntos: 19,
-                premium: true 
-            },
-
-            { 
-                nick: "  Christopher_gx", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            { 
-                nick: " Zzenko ", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            { 
-                nick: "TheGatoconbotas ", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-
-            { 
-                nick: "  PepePic4Picos", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT5",
-                    crystal: "",
-                    uhc: "LT3",
-                    sword: ""
-                },
-                puntos: 7,
-                premium: true 
-            },
-
-            { 
-                nick: " JAYTRON_MC", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "LT4",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            { 
-
-                nick: "  MasterOfRadio", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            { 
-                nick: "zLiv3r ", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "HT4",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-
-            { 
-                nick: "  telameso", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "HT5",
-                    sword: "HT4"
-                },
-                puntos: 6,
-                premium: true 
-            },
-
-            { 
-                nick: "Ahumado_ ", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "HT3",
-                    sword: ""
-                },
-                puntos: 10,
-                premium: true 
-            },
-
-            { 
-                nick: " JOHN_0505", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 1,
-                premium: true 
-            },
-
-            { 
-                nick: " Pau54633", 
-                region: "EU", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-
-            { 
-                nick: "zFormula1 ", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "LT3",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 8,
-                premium: true 
-            },
-
-            { 
-                nick: "yiyivro ", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "HT5",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            { 
-                nick: "  SweaterWeather", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            { 
-                nick: " EsposoDeMeluYork ", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos:  4,
-                premium: true 
-            },
-
-            { 
-                nick: " SowDeOro", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT3",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-
-            
-
-            { 
-                nick: "  Lejo763", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            { 
-                nick: "  kickeselbenjii", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            { 
-                nick: "  technoLogicss", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "LT4",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            { 
-                nick: " Snnifer", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "HT4",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 4,
-                premium: true 
-            },
-
-            { 
-                nick: " .itzcarlos951", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 1,
-                premium: true 
-            },
-
-            { 
-                nick: "Soysuco777xd ", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            { 
-                nick: " MauricioEvil ", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "HT4",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 4,
-                premium: true 
-            },
-
-            { 
-                nick: "  Nyzx", 
-                region: "", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT5",
-                    crystal: "HT4",
-                    uhc: "",
-                    sword: "LT5"
-                },
-                puntos: 6,
-                premium: true 
-            },
-            { 
-                nick: "_Nz1x", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 1,
-                premium: true 
-            },
-
-            { 
-                nick: "Allusivepro", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            { 
-                nick: "zIlhiam_", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "HT4",
-                    sword: "LT3"
-                },
-                puntos: 13,
-                premium: true 
-            },
-
-            { 
-                nick: "lnnow", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "HT3",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 10,
-                premium: true 
-            },
-
-            { 
-                nick: "yoperobaneada", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "LT3",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-
-            { 
-                nick: "doudix12", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "LT3",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 9,
-                premium: true 
-            },
-
-            { 
-                nick: "123asd456", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "LT3",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-
-            { 
-                nick: "2kl__", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "LT3",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-
-            { 
-                nick: "rayoyt", 
-                region: "EU", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "",
-                    sword: "HT4"
-                },
-                puntos: 4,
-                premium: true 
-            },
-            
-            { 
-                nick: "Thejuanu8", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "HT5",
-                    uhc: "",
-                    sword: "HT5"
-                },
-                puntos: 7,
-                premium: true 
-            },
-            
-            { 
-                nick: "GatoxConBotas", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "LT3",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-            
-            { 
-                nick: "jaredlodoa6", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: "LT5"
-                },
-                puntos: 5,
-                premium: true 
-            },
-            
-            { 
-                nick: "WholsNash", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "LT4",
-                    uhc: "LT5",
-                    sword: "LT4"
-                },
-                puntos: 10,
-                premium: true 
-            },
-            
-            { 
-                nick: "DonBrunoXD", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-            
-            { 
-                nick: "XREVEDZ", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "HT4",
-                    sword: ""
-                },
-                puntos: 7,
-                premium: true 
-            },
-            
-            { 
-                nick: "Skullzs_", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "HT5",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-            
-            { 
-                nick: "perupessi", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "LT4",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-            
-            { 
-                nick: "isaakFA", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "LT5",
-                    sword: "LT4"
-                },
-                puntos: 4,
-                premium: true 
-            },
-            
-            {  
-                nick: "lucas1035_1034", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-            
-            { 
-                nick: "IvanCosmic", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "LT6",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-            
-           
-            { 
-                nick: "Moyxxm", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "LT4",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-            
-            { 
-                nick: "joselazaro", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: "HT4"
-                },
-                puntos: 6,
-                premium: true 
-            },
-            
-            
-       
-            
-            { 
-                nick: "Idrxzy", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT3",
-                    crystal: "",
-                    uhc: "LT4",
-                    sword: "LT4"
-                },
-                puntos: 12,
-                premium: true 
-            },  
-            
-            {
-                nick: "TheYacod", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 1,
-                premium: true 
-            },
-            
-            { 
-                nick: "LuDark12_", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-            
-            { 
-                nick: "alansitogamerpro", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-            
-            { 
-                nick: "zGlw2973", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 1,
-                premium: true 
-            },
-            
-            { 
-                nick: "suivantht1", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: "LT4"
-                },
-                puntos: 5,
-                premium: true 
-            },
-            
-            { 
-                nick: "1slowaimz", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: "HT5"
-                },
-                puntos: 4,
-                premium: true 
-            },  
         
-            {
-                nick: "zAngel109", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "LT3",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-            
-            {
-                nick: "zzCriszz", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            }, 
-
-            {
-                nick: "Hepmici", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "HT5",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-
-            {
-                nick: "Idrxpxzz", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "LT4",
-                    sword: "LT4"
-                },
-                puntos: 6,
-                premium: true 
-            },
-
-            {
-                nick:  "lLenux", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "",
-                    uhc: "HT4",
-                    sword: ""
-                },
-                puntos: 4,
-                premium: true 
-            },
-
-            {
-                nick: " Its_Vxpzts", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-
-            {
-                nick: "WowozNxch", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "LT4",
-                    uhc: "HT5",
-                    sword: "HT5"
-                },
-                puntos: 10,
-                premium: true 
-            },
-
-            {
-                nick: "yStay", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "HT3",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 10,
-                premium: true 
-            },
-
-            {
-                nick: "BruxisDrogado", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "HT4",
-                    sword: "HT4"
-                },
-                puntos: 11,
-                premium: true 
-            },
-
-            {
-                nick: "SLJBy", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "",
-                    crystal: "HT4",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 4,
-                premium: true 
-            },
-
-            {
-                nick: "1Humano", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-            {
-                nick: "raneFA", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT4",
-                    crystal: "",
-                    uhc: "LT3",
-                    sword: ""
-                },
-                puntos: 10,
-                premium: true 
-            },
-
-            {
-                nick: "Dolaino", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT3",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 6,
-                premium: true 
-            },
-
-            {
-                nick: "pnaqueso", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 2,
-                premium: true 
-            },
-
-            {
-                nick: "zAres_", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT4",
-                    crystal: "",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 4,
-                premium: true 
-            },
-
-            {
-                nick: "elpepe182", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT5",
-                    crystal: "LT4",
-                    uhc: "",
-                    sword: ""
-                },
-                puntos: 5,
-                premium: true 
-            },
-
-            {
-                nick: "cirou", 
-                region: "SA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT5",
-                    crystal: "",
-                    uhc: "",
-                    sword: "HT5"
-                },
-                puntos: 3,
-                premium: true 
-            },
-
-           
-
-            {
-                nick: "joaquin1827", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "LT4",
-                    crystal: "LT3",
-                    uhc: "LT2",
-                    sword: "LT3"
-                },
-                puntos: 35,
-                premium: true 
-            },
-
-            {
-                nick: "ImLuissFA", 
-                region: "NA", 
-                tier: "",
-                subTiers: {
-                    nethpot: "HT4",
-                    crystal: "LT3",
-                    uhc: "HT3",
-                    sword: "LT3"
-                },
-                puntos: 26,
-                premium: true 
-            }
-            
+           [
+    { 
+        nick: "ivancosmicmihijo", 
+        region: "NA", 
+        subTiers: { mace: "HT4" },
+        puntos: 4, // HT4 = 4
+        premium: true 
+    },
+    { 
+        nick: "donyayo", 
+        region: "NA", 
+        subTiers: { sword: "LT4" },
+        puntos: 3, // LT4 = 3
+        premium: true 
+    },
+    { 
+        nick: "FreshIvanF4", 
+        region: "NA", 
+        subTiers: { uhc: "HT4" },
+        puntos: 4, // HT4 = 4
+        premium: true 
+    },
+    { 
+        nick: "_Cucarachin", 
+        region: "NA", 
+        subTiers: { nethpot: "HT4", crystal: "HT5" },
+        puntos: 6, // HT4(4) + HT5(2)
+        premium: true 
+    },
+    { 
+        nick: "skibidilmz", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4", sword: "LT4", mace: "LT5" },
+        puntos: 7, // LT4(3) + LT4(3) + LT5(1)
+        premium: true 
+    },
+    { 
+        nick: "maikelaalexander", 
+        region: "NA", 
+        subTiers: { nethpot: "HT5" },
+        puntos: 2, // HT5 = 2
+        premium: true 
+    },
+    { 
+        nick: "el_cheba", 
+        region: "NA", 
+        subTiers: { sword: "HT5", nethpot: "LT5", crystal: "LT5", mace: "LT5" },
+        puntos: 5, // HT5(2) + LT5(1) + LT5(1) + LT5(1)
+        premium: true 
+    },
+    { 
+        nick: "itzk1ng", 
+        region: "NA", 
+        subTiers: { nethpot: "HT5", mace: "HT4" },
+        puntos: 6, // HT5(2) + HT4(4)
+        premium: true 
+    },
+    { 
+        nick: "ixzVexxa", 
+        region: "NA", 
+        subTiers: { nethpot: "LT3", sword: "LT3", uhc: "HT5", crystal: "HT5", mace: "HT5" },
+        puntos: 18, // LT3(5) + LT3(5) + HT5(2) + HT5(2) + HT5(2) + HT5(2)
+        premium: true 
+    },
+    { 
+        nick: "conterstine3923", 
+        region: "EU", 
+        subTiers: { nethpot: "HT5", crystal: "HT5", sword: "HT5", uhc: "LT5", mace: "LT5" },
+        puntos: 8, // HT5(2) + HT5(2) + HT5(2) + LT5(1) + LT5(1)
+        premium: true 
+    },
+    { 
+        nick: "snowpiplup", 
+        region: "NA", 
+        subTiers: { uhc: "LT3", mace: "HT4" },
+        puntos: 9, // LT3(5) + HT4(4)
+        premium: true 
+    },
+    { 
+        nick: "Darwin_AC", 
+        region: "SA", 
+        subTiers: { nethpot: "HT5" },
+        puntos: 2, // HT5 = 2
+        premium: true 
+    },
+    { 
+        nick: "zvnny_", 
+        region: "SA", 
+        subTiers: { nethpot: "HT5" },
+        puntos: 2, // HT5 = 2
+        premium: true 
+    },
+    { 
+        nick: "DG6103", 
+        region: "SA", 
+        subTiers: { nethpot: "LT4", crystal: "LT5" },
+        puntos: 4, // LT4(3) + LT5(1)
+        premium: true 
+    },
+    { 
+        nick: "onloadL0o", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4" },
+        puntos: 3, // LT4 = 3
+        premium: true 
+    },
+    { 
+        nick: "uwu407152", 
+        region: "SA", 
+        subTiers: { crystal: "LT5" },
+        puntos: 1, // LT5 = 1
+        premium: true 
+    },
+    { 
+        nick: "Arzkhz", 
+        region: "NA", 
+        subTiers: { nethpot: "HT4", sword: "LT4", uhc: "LT5", mace: "LT5", crystal: "LT5" },
+        puntos: 11, // HT4(4) + LT4(3) + LT5(1) + LT5(1) + LT5(1) + LT5(1)
+        premium: true 
+    },
+    { 
+        nick: "HolaRegez", 
+        region: "NA", 
+        subTiers: { nethpot: "HT4", sword: "HT5", uhc: "LT5", crystal: "LT5", mace: "LT5" },
+        puntos: 10, // HT4(4) + HT5(2) + LT5(1) + LT5(1) + LT5(1) + LT5(1)
+        premium: true 
+    },
+    { 
+        nick: "Peter_K1ng", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4" },
+        puntos: 3, // LT4 = 3
+        premium: true 
+    },
+    { 
+        nick: "zrennxz", 
+        region: "NA", 
+        subTiers: { crystal: "HT5" },
+        puntos: 2, // HT5 = 2
+        premium: true 
+    },
+    { 
+        nick: "ZZZN00B", 
+        region: "SA", 
+        subTiers: { crystal: "LT4" },
+        puntos: 3, // LT4 = 3
+        premium: true 
+    },
+    { 
+        nick: "Kichero", 
+        region: "EU", 
+        subTiers: { nethpot: "HT4", sword: "HT4" },
+        puntos: 8, // HT4(4) + HT4(4)
+        premium: true 
+    },
+    { 
+        nick: "rpztm", 
+        region: "NA", 
+        subTiers: { nethpot: "HT5" },
+        puntos: 2, // HT5 = 2
+        premium: true 
+    },
+    { 
+        nick: "Alonex1", 
+        region: "NA", 
+        subTiers: { nethpot: "LT5" },
+        puntos: 1, // LT5 = 1
+        premium: true 
+    },
+    { 
+        nick: "ItzThing_", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4" },
+        puntos: 3, // LT4 = 3
+        premium: true 
+    },
+    { 
+        nick: "Alqcrit", 
+        region: "NA", 
+        subTiers: { nethpot: "HT4" },
+        puntos: 4, // HT4 = 4
+        premium: true 
+    },
+    { 
+        nick: "PollonSiinhoo", 
+        region: "NA", 
+        subTiers: { nethpot: "HT4" },
+        puntos: 4, // HT4 = 4
+        premium: true 
+    },
+    { 
+        nick: "PollónNutria", 
+        region: "NA", 
+        subTiers: { nethpot: "HT4" },
+        puntos: 4, // HT4 = 4
+        premium: true 
+    },
+    { 
+        nick: "iKissYou_", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4", crystal: "HT4" },
+        puntos: 7, // LT4(3) + HT4(4)
+        premium: true 
+    },
+    { 
+        nick: "reticience", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4", uhc: "HT5", crystal: "HT5", mace: "LT5" },
+        puntos: 10, // LT4(3) + HT5(2) + HT5(2) + LT5(1) + LT5(1)
+        premium: true 
+    },
+    { 
+        nick: "Matz15_", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4" },
+        puntos: 3, // LT4 = 3
+        premium: true 
+    },
+    { 
+        nick: "ixzWraith", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4" },
+        puntos: 3, // LT4 = 3
+        premium: true 
+    },
+    { 
+        nick: "ItzCreedMe_", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4" },
+        puntos: 3, // LT4 = 3
+        premium: true 
+    },
+    { 
+        nick: "franco_AS", 
+        region: "SA", 
+        subTiers: { nethpot: "LT5" },
+        puntos: 1, // LT5 = 1
+        premium: true 
+    },
+    { 
+        nick: "Fabribg", 
+        region: "SA", 
+        subTiers: { nethpot: "LT5" },
+        puntos: 1, // LT5 = 1
+        premium: true 
+    },
+    { 
+        nick: "rzdrxgo", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4" },
+        puntos: 3, // LT4 = 3
+        premium: true 
+    },
+    { 
+        nick: "bestmexico", 
+        region: "NA", 
+        subTiers: { nethpot: "HT4" },
+        puntos: 4, // HT4 = 4
+        premium: true 
+    },
+    { 
+        nick: "Branland07", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4" },
+        puntos: 3, // LT4 = 3
+        premium: true 
+    },
+    { 
+        nick: "iDurelRs_", 
+        region: "NA", 
+        subTiers: { nethpot: "HT4" },
+        puntos: 4, // HT4 = 4
+        premium: true 
+    },
+    { 
+        nick: "Ecunem", 
+        region: "NA", 
+        subTiers: { nethpot: "LT3", sword: "HT4" },
+        puntos: 9, // LT3(5) + HT4(4)
+        premium: true 
+    },
+    { 
+        nick: "PXOJA", 
+        region: "", 
+        subTiers: { nethpot: "HT4", sword: "LT3" },
+        puntos: 9, // HT4(4) + LT3(5)
+        premium: true 
+    },
+    { 
+        nick: "TwxMex", 
+        region: "", 
+        subTiers: { nethpot: "LT3", sword: "HT5" },
+        puntos: 7, // LT3(5) + HT5(2)
+        premium: true 
+    },
+    { 
+        nick: "vKayzer", 
+        region: "NA", 
+        subTiers: { nethpot: "HT4", sword: "LT3" },
+        puntos: 9, // HT4(4) + LT3(5)
+        premium: true 
+    },
+    { 
+        nick: "ImJxkl", 
+        region: "NA", 
+        subTiers: { nethpot: "HT4", sword: "LT4" },
+        puntos: 7, // HT4(4) + LT4(3)
+        premium: true 
+    },
+    { 
+        nick: "nczb", 
+        region: "NA", 
+        subTiers: { nethpot: "LT4", crystal: "HT4" },
+        puntos: 7, // LT4(3) + HT4(4)
+        premium: true 
+    },
+    { 
+        nick: "vExhzy", 
+        region: "NA", 
+        subTiers: { nethpot: "HT4", crystal: "HT3" },
+        puntos: 14, // HT4(4) + HT3(10)
+        premium: true 
+    },
+    { 
+        nick: "sPalomita", 
+        region: "SA", 
+        subTiers: { nethpot: "HT4", sword: "LT3" },
+        puntos: 9, // HT4(4) + LT3(5)
+        premium: true 
+    }
+    
            
             
             ];
