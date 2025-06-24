@@ -20,6 +20,8 @@
             --moon-purple: #9D50FF;
             --moon-blue: #6E8EFB;
             --discord-blurple: #5865F2;
+            --cheater-red: #FF4444;
+            --blacklist-black: #333333;
         }
 
         * {
@@ -279,6 +281,22 @@
 
         .discord-btn:hover {
             background: #4752c4;
+        }
+
+        .cheater-btn {
+            background: var(--cheater-red);
+        }
+
+        .cheater-btn:hover {
+            background: #e63c3c;
+        }
+
+        .blacklist-btn {
+            background: var(--blacklist-black);
+        }
+
+        .blacklist-btn:hover {
+            background: #222;
         }
 
         .container {
@@ -598,6 +616,83 @@
         .none-member {
             color: rgba(230, 249, 255, 0.5);
             font-style: italic;
+        }
+
+        /* Cheaterlist and Blacklist sections */
+        .cheaterlist-container, .blacklist-container {
+            display: none;
+            max-width: 800px;
+            margin: 2rem auto;
+            background: var(--color-card);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(157, 80, 255, 0.2);
+        }
+
+        .cheaterlist-title, .blacklist-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        .cheaterlist-title {
+            color: var(--cheater-red);
+            text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+        }
+
+        .blacklist-title {
+            color: var(--blacklist-black);
+            text-shadow: 0 0 10px rgba(51, 51, 51, 0.5);
+        }
+
+        .cheater-player, .blacklist-player {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .cheater-player {
+            background: rgba(255, 68, 68, 0.1);
+            border-left: 3px solid var(--cheater-red);
+        }
+
+        .blacklist-player {
+            background: rgba(51, 51, 51, 0.1);
+            border-left: 3px solid var(--blacklist-black);
+        }
+
+        .cheater-player:hover {
+            background: rgba(255, 68, 68, 0.2);
+            transform: translateX(5px);
+        }
+
+        .blacklist-player:hover {
+            background: rgba(51, 51, 51, 0.2);
+            transform: translateX(5px);
+        }
+
+        .cheater-avatar, .blacklist-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .cheater-name, .blacklist-name {
+            font-weight: bold;
+            flex-grow: 1;
+        }
+
+        .cheater-date, .blacklist-date {
+            font-size: 0.9rem;
+            color: rgba(230, 249, 255, 0.7);
         }
 
         /* Modal para mostrar jugadores por categoría y tier */
@@ -949,12 +1044,12 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(157, 80, 255, 0.3);
+            box-shadow: 0 0 15px rgba(157, 80, 255, 0.3));
         }
 
         .player-modal-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(157, 80, 255, 0.5);
+            box-shadow: 0 5px 20px rgba(157, 80, 255, 0.5));
         }
 
         @media (max-width: 768px) {
@@ -969,6 +1064,13 @@
                 transform: none;
                 width: 100%;
                 justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .nav-btn {
+                min-width: 120px;
+                font-size: 0.9rem;
+                padding: 8px 12px;
             }
             
             .search-bar {
@@ -1016,7 +1118,7 @@
                 min-width: auto;
             }
             
-            .staff-container {
+            .staff-container, .cheaterlist-container, .blacklist-container {
                 padding: 15px;
             }
             
@@ -1046,6 +1148,14 @@
             <span>Moon TierList</span>
         </div>
         <div class="nav-buttons">
+            <button class="nav-btn cheater-btn" id="cheater-btn">
+                <i class="fas fa-user-slash"></i>
+                Cheaterlist
+            </button>
+            <button class="nav-btn blacklist-btn" id="blacklist-btn">
+                <i class="fas fa-ban"></i>
+                Blacklist
+            </button>
             <button class="nav-btn" id="staff-btn">
                 <i class="fas fa-users"></i>
                 Moon Staff
@@ -1266,6 +1376,40 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Sección de Cheaterlist -->
+        <div class="cheaterlist-container" id="cheaterlist-container">
+            <h2 class="cheaterlist-title">Cheaterlist</h2>
+            <div id="cheater-list">
+                <div class="cheater-player">
+                    <img src="https://mc-heads.net/avatar/ItsEmaStyles/64" class="cheater-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                    <span class="cheater-name">ItsEmaStyles</span>
+                    <span class="cheater-date">22/06/2025</span>
+                </div>
+                <div class="cheater-player">
+                    <img src="https://mc-heads.net/avatar/matisito15_/64" class="cheater-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                    <span class="cheater-name">matisito15_</span>
+                    <span class="cheater-date">21/06/2025</span>
+                </div>
+                <div class="cheater-player">
+                    <img src="https://mc-heads.net/avatar/itzSlowwzz/64" class="cheater-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                    <span class="cheater-name">itzSlowwzz</span>
+                    <span class="cheater-date">24/05/2025</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección de Blacklist -->
+        <div class="blacklist-container" id="blacklist-container">
+            <h2 class="blacklist-title">Blacklist</h2>
+            <div id="blacklist-list">
+                <div class="blacklist-player">
+                    <img src="https://mc-heads.net/avatar/1Pumz/64" class="blacklist-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                    <span class="blacklist-name">1Pumz</span>
+                    <span class="blacklist-date">28/05/2025</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal para mostrar jugadores por categoría y tier -->
@@ -1300,37 +1444,10 @@
                 <div class="player-skin-container">
                     <img id="player-skin" class="player-skin" src="" alt="Skin del jugador">
                 </div>
-                <div class="player-info">
-                    <div class="player-info-row">
-                        <span class="player-info-label">NICK:</span>
-                        <span class="player-info-value" id="player-nick"></span>
-                        <span id="player-rank-badge" class="rank-badge"></span>
-                    </div>
-                    <div class="player-info-row">
-                        <span class="player-info-label">REGIÓN:</span>
-                        <span class="player-info-value" id="player-region"></span>
-                    </div>
-                    <div class="player-info-row">
-                        <span class="player-info-label">PUNTOS:</span>
-                        <span class="player-info-value" id="player-points"></span>
-                    </div>
-                    <div class="player-info-row">
-                        <span class="player-info-label">PREMIUM:</span>
-                        <span class="player-info-value" id="player-premium"></span>
-                    </div>
-                    <div class="player-tiers">
-                        <h3>CLASIFICACIONES</h3>
-                        <div id="player-tiers-container"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="player-modal-footer">
-                <button class="player-modal-button" onclick="closePlayerModal()">
-                    <i class="fas fa-times"></i> Cerrar
-                </button>
             </div>
         </div>
     </div>
+
      <script>
 
    const players = [
@@ -1382,7 +1499,7 @@
   { nick: "vExhzy", region: "NA", subTiers: { nethpot: "HT4", crystal: "HT3" }, puntos: 14, premium: true },
   { nick: "sPalomita", region: "SA", subTiers: { nethpot: "HT4", sword: "LT3" }, puntos: 10, premium: true },
   { nick: "SillyJoaquin", region: "SA", subTiers: { uhc: "LT2", crystal: "LT3", sword: "LT3", nethpot: "LT4" }, puntos: 35, premium: true },
-  { nick: "_LuisSigmaBoyFa_", region: "NA", subTiers: { uhc: "HT3", sword: "LT3", nethpot: "HT4" }, puntos: 20, premium: true },
+  { nick: "_LuisSigmaBoyES_", region: "NA", subTiers: { uhc: "HT3", sword: "LT3", nethpot: "HT4" }, puntos: 20, premium: true },
   { nick: "DxstrES", region: "NA", subTiers: { sword: "HT3", uhc: "LT3", nethpot: "LT4" }, puntos: 19, premium: true },
   { nick: "WatonDeOro", region: "NA", subTiers: { nethpot: "HT3", sword: "LT3" }, puntos: 16, premium: true },
   { nick: "gatox2903", region: "SA", subTiers: { sword: "HT3", uhc: "LT3" }, puntos: 16, premium: true },
@@ -1395,6 +1512,7 @@
   { nick: "sielk_", region: "NA", subTiers: { sword: "HT5" }, puntos: 2, premium: true }
 ];
         
+          // ========== FUNCIÓN PRINCIPAL ==========
         function displayPlayers(playerList = players) {
             const playersList = document.getElementById('players-list');
             playersList.innerHTML = '';
@@ -1683,6 +1801,63 @@
             }
         }
 
+        // ========== FUNCIONES PARA CHEATERLIST Y BLACKLIST ==========
+        function toggleCheaterlist() {
+            const rankingTable = document.querySelector('.ranking-table');
+            const searchBar = document.querySelector('.search-bar');
+            const categoriesContainer = document.querySelector('.categories-container');
+            const cheaterlistContainer = document.getElementById('cheaterlist-container');
+            const cheaterBtn = document.getElementById('cheater-btn');
+            const staffContainer = document.getElementById('staff-container');
+            const blacklistContainer = document.getElementById('blacklist-container');
+            
+            if (cheaterlistContainer.style.display === 'block') {
+                // Mostrar ranking
+                cheaterlistContainer.style.display = 'none';
+                rankingTable.style.display = 'block';
+                searchBar.style.display = 'flex';
+                categoriesContainer.style.display = 'flex';
+                cheaterBtn.innerHTML = '<i class="fas fa-user-slash"></i> Cheaterlist';
+            } else {
+                // Mostrar cheaterlist
+                cheaterlistContainer.style.display = 'block';
+                rankingTable.style.display = 'none';
+                searchBar.style.display = 'none';
+                categoriesContainer.style.display = 'none';
+                staffContainer.style.display = 'none';
+                blacklistContainer.style.display = 'none';
+                cheaterBtn.innerHTML = '<i class="fas fa-trophy"></i> Moon Tierlist';
+            }
+        }
+
+        function toggleBlacklist() {
+            const rankingTable = document.querySelector('.ranking-table');
+            const searchBar = document.querySelector('.search-bar');
+            const categoriesContainer = document.querySelector('.categories-container');
+            const blacklistContainer = document.getElementById('blacklist-container');
+            const blacklistBtn = document.getElementById('blacklist-btn');
+            const staffContainer = document.getElementById('staff-container');
+            const cheaterlistContainer = document.getElementById('cheaterlist-container');
+            
+            if (blacklistContainer.style.display === 'block') {
+                // Mostrar ranking
+                blacklistContainer.style.display = 'none';
+                rankingTable.style.display = 'block';
+                searchBar.style.display = 'flex';
+                categoriesContainer.style.display = 'flex';
+                blacklistBtn.innerHTML = '<i class="fas fa-ban"></i> Blacklist';
+            } else {
+                // Mostrar blacklist
+                blacklistContainer.style.display = 'block';
+                rankingTable.style.display = 'none';
+                searchBar.style.display = 'none';
+                categoriesContainer.style.display = 'none';
+                staffContainer.style.display = 'none';
+                cheaterlistContainer.style.display = 'none';
+                blacklistBtn.innerHTML = '<i class="fas fa-trophy"></i> Moon Tierlist';
+            }
+        }
+
         // ========== EVENTOS ==========
         document.getElementById('tier-tabs').addEventListener('click', (e) => {
             if (e.target.classList.contains('tier-tab')) {
@@ -1704,6 +1879,8 @@
         });
 
         document.getElementById('staff-btn').addEventListener('click', toggleStaffView);
+        document.getElementById('cheater-btn').addEventListener('click', toggleCheaterlist);
+        document.getElementById('blacklist-btn').addEventListener('click', toggleBlacklist);
 
         function closeModal() {
             document.getElementById('category-modal').style.display = 'none';
