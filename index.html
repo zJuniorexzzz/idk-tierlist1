@@ -36,6 +36,7 @@
             color: var(--color-text);
             min-height: 100vh;
             overflow-x: hidden;
+            will-change: transform, opacity;
         }
 
         @keyframes fadeInGlow {
@@ -205,6 +206,34 @@
             pointer-events: none;
             z-index: 1000;
             overflow: hidden;
+        }
+
+        .effects-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: rgba(42, 10, 74, 0.8);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--moon-purple);
+            transition: all 0.3s;
+        }
+
+        .effects-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(157, 80, 255, 0.5);
+        }
+
+        .effects-toggle i {
+            font-size: 1.5rem;
+            color: var(--color-highlight);
         }
 
         /* Navbar y logo */
@@ -470,10 +499,6 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-        }
-
-        .tier-main {
-            font-weight: bold;
         }
 
         .tier-subcategories {
@@ -833,14 +858,16 @@
         .player-modal-content {
             background: linear-gradient(145deg, #2a0a4a, #1a0a2a);
             border-radius: 15px;
-            padding: 30px;
-            width: 90%;
-            max-width: 700px;
+            padding: 25px;
+            width: 85%;
+            max-width: 600px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             border: 1px solid rgba(157, 80, 255, 0.3);
             position: relative;
             overflow: hidden;
             animation: fadeInGlow 0.5s ease-out;
+            transform: scale(0.9);
+            transform-origin: center;
         }
 
         .player-modal-content::before {
@@ -858,13 +885,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             position: relative;
             z-index: 1;
         }
 
         .player-modal-title {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--color-highlight);
             text-shadow: 0 0 10px rgba(157, 80, 255, 0.5);
             font-family: 'Kanit', sans-serif;
@@ -877,7 +904,7 @@
 
         .player-modal-body {
             display: flex;
-            gap: 30px;
+            gap: 20px;
             position: relative;
             z-index: 1;
         }
@@ -889,7 +916,7 @@
             align-items: center;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
-            padding: 20px;
+            padding: 15px;
             border: 1px solid rgba(157, 80, 255, 0.2);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.5s;
@@ -898,7 +925,7 @@
 
         .player-skin {
             width: 100%;
-            max-width: 250px;
+            max-width: 200px;
             height: auto;
             border-radius: 5px;
             filter: drop-shadow(0 0 10px rgba(157, 80, 255, 0.3));
@@ -914,15 +941,15 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .player-info-row {
             display: flex;
             align-items: center;
-            padding: 10px 15px;
+            padding: 8px 12px;
             background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
+            border-radius: 6px;
             border-left: 3px solid var(--color-primary);
             transition: all 0.3s;
         }
@@ -936,24 +963,24 @@
         .player-info-label {
             font-weight: bold;
             color: var(--color-highlight);
-            min-width: 100px;
-            font-size: 0.9rem;
+            min-width: 90px;
+            font-size: 0.8rem;
         }
 
         .player-info-value {
             flex: 1;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--color-text);
         }
 
         .player-tiers {
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .player-tiers h3 {
             color: var(--color-highlight);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
             border-bottom: 1px solid rgba(157, 80, 255, 0.2);
             padding-bottom: 5px;
         }
@@ -961,11 +988,11 @@
         .player-tier {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 10px 15px;
+            gap: 12px;
+            padding: 8px 12px;
             background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            margin-bottom: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
             transition: all 0.3s;
             border-left: 3px solid transparent;
         }
@@ -977,22 +1004,24 @@
         }
 
         .player-tier-icon {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             object-fit: contain;
             filter: drop-shadow(0 0 5px rgba(157, 80, 255, 0.3));
         }
 
         .player-tier-category {
-            min-width: 100px;
+            min-width: 90px;
             font-weight: bold;
             color: var(--color-highlight);
+            font-size: 0.9rem;
         }
 
         .player-tier-value {
             flex: 1;
             text-align: right;
             font-weight: bold;
+            font-size: 0.9rem;
         }
 
         .tier-1 { color: var(--gold); }
@@ -1003,11 +1032,11 @@
 
         .rank-badge {
             display: inline-block;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
             font-weight: bold;
-            margin-left: 10px;
+            margin-left: 8px;
             text-transform: uppercase;
         }
 
@@ -1030,7 +1059,7 @@
         }
 
         .player-modal-footer {
-            margin-top: 20px;
+            margin-top: 15px;
             display: flex;
             justify-content: flex-end;
         }
@@ -1039,17 +1068,17 @@
             background: linear-gradient(90deg, var(--moon-purple), var(--moon-blue));
             border: none;
             color: white;
-            padding: 8px 20px;
-            border-radius: 5px;
+            padding: 6px 16px;
+            border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(157, 80, 255, 0.3));
+            box-shadow: 0 0 12px rgba(157, 80, 255, 0.3));
         }
 
         .player-modal-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(157, 80, 255, 0.5));
+            box-shadow: 0 5px 15px rgba(157, 80, 255, 0.5));
         }
 
         @media (max-width: 768px) {
@@ -1096,23 +1125,23 @@
                 flex-direction: column;
             }
             .player-skin-container {
-                margin-bottom: 20px;
+                margin-bottom: 15px;
                 animation: none;
             }
             .player-skin {
-                max-width: 180px;
+                max-width: 150px;
             }
             .player-info-row {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 5px;
+                gap: 4px;
             }
             .player-info-label {
                 min-width: auto;
             }
             .player-tier {
-                gap: 10px;
-                padding: 8px 10px;
+                gap: 8px;
+                padding: 6px 8px;
             }
             .player-tier-category {
                 min-width: auto;
@@ -1126,12 +1155,17 @@
                 flex-direction: column;
                 gap: 10px;
             }
+            
+            .player-modal-content {
+                width: 95%;
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="loader">
-        <div class="loader-text">⚔️ Cargando Moon Tierlist...</div>
+        <div class="loader-text">⚔️ ᴄᴀʀɢᴀɴᴅᴏ ᴍᴏᴏɴ ᴛɪᴇʀʟɪꜱᴛ...</div>
         <div class="sword-container">
             <div class="cut-object"></div>
             <div class="sword">🗡️</div>
@@ -1141,28 +1175,32 @@
     </div>
 
     <div id="falling-leaves"></div>
+    
+    <div class="effects-toggle" id="effects-toggle" title="Toggle Effects">
+        <i class="fas fa-magic"></i>
+    </div>
 
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-moon"></i>
-            <span>Moon TierList</span>
+            <span>ᴍᴏᴏɴ ᴛɪᴇʀʟɪꜱᴛ</span>
         </div>
         <div class="nav-buttons">
             <button class="nav-btn cheater-btn" id="cheater-btn">
                 <i class="fas fa-user-slash"></i>
-                Cheaterlist
+                ᴄʜᴇᴀᴛᴇʀʟɪꜱᴛ
             </button>
             <button class="nav-btn blacklist-btn" id="blacklist-btn">
                 <i class="fas fa-ban"></i>
-                Blacklist
+                ʙʟᴀᴄᴋʟɪꜱᴛ
             </button>
             <button class="nav-btn" id="staff-btn">
                 <i class="fas fa-users"></i>
-                Moon Staff
+                ᴍᴏᴏɴ ꜱᴛᴀꜰꜰ
             </button>
             <a href="https://discord.gg/x3SKKqJzUg" class="nav-btn discord-btn" target="_blank">
                 <i class="fab fa-discord"></i>
-                Discord
+                ᴅɪꜱᴄᴏʀᴅ
             </a>
         </div>
     </nav>
@@ -1171,207 +1209,244 @@
         <div class="categories-container">
             <div class="category active" onclick="openCategoryModal('all')">
                 <img src="https://mctiers.com/tier_icons/vanilla.svg" class="category-icon">
-                <span class="category-name">Todos</span>
+                <span class="category-name">ᴛᴏᴅᴏꜱ</span>
             </div>
             <div class="category" onclick="openCategoryModal('nethpot')">
                 <img src="https://mctiers.com/tier_icons/nethop.svg" class="category-icon">
-                <span class="category-name">Nethpot</span>
+                <span class="category-name">ɴᴇᴛʜᴘᴏᴛ</span>
             </div>
             <div class="category" onclick="openCategoryModal('crystal')">
                 <img src="https://mctiers.com/tier_icons/vanilla.svg" class="category-icon">
-                <span class="category-name">Crystal</span>
+                <span class="category-name">ᴄʀʏꜱᴛᴀʟ</span>
             </div>
             <div class="category" onclick="openCategoryModal('sword')">
                 <img src="https://mctiers.com/tier_icons/sword.svg" class="category-icon">
-                <span class="category-name">Sword</span>
+                <span class="category-name">ꜱᴡᴏʀᴅ</span>
             </div>
             <div class="category" onclick="openCategoryModal('uhc')">
                 <img src="https://mctiers.com/tier_icons/uhc.svg" class="category-icon">
-                <span class="category-name">UHC</span>
+                <span class="category-name">ᴜʜᴄ</span>
             </div>
             <div class="category" onclick="openCategoryModal('mace')">
                 <img src="https://mctiers.com/tier_icons/mace.svg" class="category-icon">
-                <span class="category-name">Mace</span>
+                <span class="category-name">ᴍᴀᴄᴇ</span>
             </div>
         </div>
 
         <div class="search-bar">
             <i class="fas fa-search"></i>
-            <input type="text" id="search-input" placeholder="🔍 Buscar jugador...">
+            <input type="text" id="search-input" placeholder="🔍 ʙᴜꜱᴄᴀʀ ᴊᴜɢᴀᴅᴏʀ...">
         </div>
 
         <div class="ranking-table">
             <div class="table-header">
                 <span>#</span>
-                <span>Jugador</span>
-                <span>Región</span>
-                <span>Tier</span>
-                <span>Puntos</span>
+                <span>ᴊᴜɢᴀᴅᴏʀ</span>
+                <span>ʀᴇɢɪóɴ</span>
+                <span>ᴛɪᴇʀ</span>
+                <span>ᴘᴜɴᴛᴏꜱ</span>
             </div>
             <div id="players-list"></div>
         </div>
         
         <!-- Sección de Staff -->
         <div class="staff-container" id="staff-container">
-            <h2 class="staff-title">Moon Staff</h2>
+            <h2 class="staff-title">ᴍᴏᴏɴ ꜱᴛᴀꜰꜰ</h2>
             
             <div class="staff-role">
-                <h3 class="role-title">Owner</h3>
+                <h3 class="role-title">ᴏᴡɴᴇʀ</h3>
                 <div class="role-members">
                     <div class="staff-member">
                         <img src="https://render.crafty.gg/3d/bust/Arzkhz?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">Arzkhz</span>
+                        <span class="staff-name">ᴀʀᴢᴋʜᴢ</span>
                     </div>
                 </div>
             </div>
             
             <div class="staff-role">
-                <h3 class="role-title">Manager</h3>
+                <h3 class="role-title">ᴍᴀɴᴀɢᴇʀ</h3>
                 <div class="role-members">
-                    <div class="none-member">None</div>
+                    <div class="none-member">ɴᴏɴᴇ</div>
                 </div>
             </div>
             
             <div class="staff-role">
-                <h3 class="role-title">Admin</h3>
+                <h3 class="role-title">ᴀᴅᴍɪɴ</h3>
                 <div class="role-members">
-                    <div class="none-member">None</div>
+                    <div class="none-member">ɴᴏɴᴇ</div>
                 </div>
             </div>
             
             <div class="staff-role">
-                <h3 class="role-title">Admin Jr</h3>
+                <h3 class="role-title">ᴀᴅᴍɪɴ ᴊʀ</h3>
                 <div class="role-members">
                     <div class="staff-member">
                         <img src="https://render.crafty.gg/3d/bust/qKylaz?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">qKylaz</span>
-                    </div>
-                    <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/_LuisSigmaBoyFa_?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">_LuisSigmaBoyFa_</span>
+                        <span class="staff-name">ǫᴋʏʟᴀᴢ</span>
                     </div>
                 </div>
             </div>
             
             <div class="staff-role">
-                <h3 class="role-title">Regulator</h3>
+                <h3 class="role-title">ʀᴇɢᴜʟᴀᴛᴏʀ</h3>
                 <div class="role-members">
-                    <div class="none-member">None</div>
-                </div>
-            </div>
-            
-            <div class="staff-role">
-                <h3 class="role-title">Discord Mod</h3>
-                <div class="role-members">
-                    <div class="none-member">None</div>
-                </div>
-            </div>
-            
-            <div class="staff-role">
-                <h3 class="role-title">Discord Helper</h3>
-                <div class="role-members">
-                    <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/benjiiTHEGOAT?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">benjiiTHEGOAT</span>
-                    </div>
                     <div class="staff-member">
                         <img src="https://render.crafty.gg/3d/bust/qKylaz?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">qKylaz</span>
+                        <span class="staff-name">ǫᴋʏʟᴀᴢ</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="staff-role">
+                <h3 class="role-title">ᴅɪꜱᴄᴏʀᴅ ᴍᴏᴅ</h3>
+                <div class="role-members">
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/qKylaz?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ǫᴋʏʟᴀᴢ</span>
                     </div>
                     <div class="staff-member">
                         <img src="https://render.crafty.gg/3d/bust/zGlw2973?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">zGlw2973</span>
+                        <span class="staff-name">ᴢɢʟᴡ2973</span>
                     </div>
                 </div>
             </div>
             
             <div class="staff-role">
-                <h3 class="role-title">Head Tester</h3>
-                <div class="role-members">
-                    <div class="none-member">None</div>
-                </div>
-            </div>
-            
-            <div class="staff-role">
-                <h3 class="role-title">Senior Tester</h3>
+                <h3 class="role-title">ᴅɪꜱᴄᴏʀᴅ ʜᴇʟᴘᴇʀ</h3>
                 <div class="role-members">
                     <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/GordoDeStormSMP?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">GordoDeStormSMP</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="staff-role">
-                <h3 class="role-title">Verified Tester</h3>
-                <div class="role-members">
-                    <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/HolaRegez?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">HolaRegez</span>
+                        <img src="https://render.crafty.gg/3d/bust/iCabiii?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ɪᴄᴀʙɪɪɪ</span>
                     </div>
                     <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/ixzVexxa?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">ixzVexxa</span>
+                        <img src="https://render.crafty.gg/3d/bust/conterstine3923?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴄᴏɴᴛᴇʀꜱᴛɪɴᴇ3923</span>
                     </div>
                     <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/GordoDeStormSMP?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">GordoDeStormSMP</span>
+                        <img src="https://render.crafty.gg/3d/bust/GreenyBright?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ɢʀᴇᴇɴʏʙʀɪɢʜᴛ</span>
                     </div>
                     <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/_Kelozz?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">_Kelozz</span>
-                    </div>
-                    <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/_LuisSigmaBoyFa_?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">_LuisSigmaBoyFa_</span>
-                    </div>
-                    <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/22FreeStyle_?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">22FreeStyle_</span>
-                    </div>
-                    <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/_Lumaram_?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">_Lumaram_</span>
-                    </div>
-                    <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/Ilhiam1?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">Ilhiam1</span>
+                        <img src="https://render.crafty.gg/3d/bust/Nahu_s33?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ɴᴀʜᴜ_ꜱ33</span>
                     </div>
                     <div class="staff-member">
                         <img src="https://render.crafty.gg/3d/bust/PXOJA?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">PXOJA</span>
+                        <span class="staff-name">ᴘxᴏᴊᴀ</span>
                     </div>
                     <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/WatonDeOro?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">WatonDeOro</span>
+                        <img src="https://render.crafty.gg/3d/bust/zGlw2973?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴢɢʟᴡ2973</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/qKylaz?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ǫᴋʏʟᴀᴢ</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="staff-role">
+                <h3 class="role-title">ʜᴇᴀᴅ ᴛᴇꜱᴛᴇʀ</h3>
+                <div class="role-members">
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/qKylaz?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ǫᴋʏʟᴀᴢ</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="staff-role">
+                <h3 class="role-title">ꜱᴇɴɪᴏʀ ᴛᴇꜱᴛᴇʀ</h3>
+                <div class="role-members">
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/qKylaz?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ǫᴋʏʟᴀᴢ</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="staff-role">
+                <h3 class="role-title">ᴠᴇʀɪꜰɪᴇᴅ ᴛᴇꜱᴛᴇʀ</h3>
+                <div class="role-members">
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/voxkl?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴠᴏxᴋʟ</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/Thesinglemaster?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴛʜᴇꜱɪɴɢʟᴇᴍᴀꜱᴛᴇʀ</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/Ovieedo?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴏᴠɪᴇᴇᴅᴏ</span>
                     </div>
                     <div class="staff-member">
                         <img src="https://render.crafty.gg/3d/bust/Lxney?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">Lxney</span>
+                        <span class="staff-name">ʟxɴᴇʏ</span>
                     </div>
                     <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/inefqblee?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">inefqblee</span>
+                        <img src="https://render.crafty.gg/3d/bust/iCabiii?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ɪᴄᴀʙɪɪɪ</span>
                     </div>
                     <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/TwxMex_?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">TwxMex_</span>
+                        <img src="https://render.crafty.gg/3d/bust/el_chuxa?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴇʟ_ᴄʜᴜxᴀ</span>
                     </div>
                     <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/tzK1ng?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">tzK1ng</span>
+                        <img src="https://render.crafty.gg/3d/bust/cl0wnyytakanashi?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴄʟ0ᴡɴʏʏᴛᴀᴋᴀɴᴀꜱʜɪ</span>
                     </div>
                     <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/FIGDEMON?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">FIGDEMON</span>
+                        <img src="https://render.crafty.gg/3d/bust/PapaJhonsPizza?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴘᴀᴘᴀᴊʜᴏɴꜱᴘɪᴢᴢᴀ</span>
                     </div>
                     <div class="staff-member">
-                        <img src="https://render.crafty.gg/3d/bust/bestmexico?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">bestmexico</span>
+                        <img src="https://render.crafty.gg/3d/bust/blackoxyz?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ʙʟᴀᴄᴋᴏxʏᴢ</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/YotyNotBody?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ʏᴏᴛʏɴᴏᴛʙᴏᴅʏ</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/sRosee?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ꜱʀᴏꜱᴇᴇ</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/sonibegas?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ꜱᴏɴɪʙᴇɢᴀꜱ</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/Danilogames1232?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴅᴀɴɪʟᴏɢᴀᴍᴇꜱ1232</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/Silava_T1?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ꜱɪʟᴀᴠᴀ_ᴛ1</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/Dav_s33?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴅᴀᴠ_ꜱ33</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/qKylaz?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ǫᴋʏʟᴀᴢ</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/PXOJA?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴘxᴏᴊᴀ</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/WatonDeOro?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">ᴡᴀᴛᴏɴᴅᴇᴏʀᴏ</span>
+                    </div>
+                    <div class="staff-member">
+                        <img src="https://render.crafty.gg/3d/bust/_Lumaram_?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                        <span class="staff-name">_ʟᴜᴍᴀʀᴀᴍ_</span>
                     </div>
                     <div class="staff-member">
                         <img src="https://render.crafty.gg/3d/bust/SillyJoaquin?format=webp&width=64&height=64" class="staff-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                        <span class="staff-name">SillyJoaquin</span>
+                        <span class="staff-name">ꜱɪʟʟʏᴊᴏᴀǫᴜɪɴ</span>
                     </div>
                 </div>
             </div>
@@ -1379,33 +1454,38 @@
         
         <!-- Sección de Cheaterlist -->
         <div class="cheaterlist-container" id="cheaterlist-container">
-            <h2 class="cheaterlist-title">Cheaterlist</h2>
+            <h2 class="cheaterlist-title">ᴄʜᴇᴀᴛᴇʀʟɪꜱᴛ</h2>
             <div id="cheater-list">
                 <div class="cheater-player">
                     <img src="https://mc-heads.net/avatar/ItsEmaStyles/64" class="cheater-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                    <span class="cheater-name">ItsEmaStyles</span>
+                    <span class="cheater-name">ɪᴛꜱᴇᴍᴀꜱᴛʏʟᴇꜱ</span>
                     <span class="cheater-date">22/06/2025</span>
                 </div>
                 <div class="cheater-player">
                     <img src="https://mc-heads.net/avatar/matisito15_/64" class="cheater-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                    <span class="cheater-name">matisito15_</span>
+                    <span class="cheater-name">ᴍᴀᴛɪꜱɪᴛᴏ15_</span>
                     <span class="cheater-date">21/06/2025</span>
                 </div>
                 <div class="cheater-player">
                     <img src="https://mc-heads.net/avatar/itzSlowwzz/64" class="cheater-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                    <span class="cheater-name">itzSlowwzz</span>
+                    <span class="cheater-name">ɪᴛᴢꜱʟᴏᴡᴡᴢᴢ</span>
                     <span class="cheater-date">24/05/2025</span>
+                </div>
+                <div class="cheater-player">
+                    <img src="https://mc-heads.net/avatar/1Pumz/64" class="cheater-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+                    <span class="cheater-name">1ᴘᴜᴍᴢ</span>
+                    <span class="cheater-date">28/05/2025</span>
                 </div>
             </div>
         </div>
         
         <!-- Sección de Blacklist -->
         <div class="blacklist-container" id="blacklist-container">
-            <h2 class="blacklist-title">Blacklist</h2>
+            <h2 class="blacklist-title">ʙʟᴀᴄᴋʟɪꜱᴛ</h2>
             <div id="blacklist-list">
                 <div class="blacklist-player">
                     <img src="https://mc-heads.net/avatar/1Pumz/64" class="blacklist-avatar" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                    <span class="blacklist-name">1Pumz</span>
+                    <span class="blacklist-name">1ᴘᴜᴍᴢ</span>
                     <span class="blacklist-date">28/05/2025</span>
                 </div>
             </div>
@@ -1416,16 +1496,16 @@
     <div class="modal" id="category-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="modal-title">Categoría</h2>
+                <h2 class="modal-title" id="modal-title">ᴄᴀᴛᴇɢᴏʀɪᴀ</h2>
                 <button class="close-modal" onclick="closeModal()">&times;</button>
             </div>
             <div class="tier-tabs" id="tier-tabs">
-                <div class="tier-tab active" data-tier="all">Todos</div>
-                <div class="tier-tab" data-tier="1">Tier 1</div>
-                <div class="tier-tab" data-tier="2">Tier 2</div>
-                <div class="tier-tab" data-tier="3">Tier 3</div>
-                <div class="tier-tab" data-tier="4">Tier 4</div>
-                <div class="tier-tab" data-tier="5">Tier 5</div>
+                <div class="tier-tab active" data-tier="all">ᴛᴏᴅᴏꜱ</div>
+                <div class="tier-tab" data-tier="1">ᴛɪᴇʀ 1</div>
+                <div class="tier-tab" data-tier="2">ᴛɪᴇʀ 2</div>
+                <div class="tier-tab" data-tier="3">ᴛɪᴇʀ 3</div>
+                <div class="tier-tab" data-tier="4">ᴛɪᴇʀ 4</div>
+                <div class="tier-tab" data-tier="5">ᴛɪᴇʀ 5</div>
             </div>
             <div class="tier-players" id="tier-players">
                 <!-- Jugadores se mostrarán aquí -->
@@ -1437,16 +1517,50 @@
     <div class="player-modal" id="player-modal">
         <div class="player-modal-content">
             <div class="player-modal-header">
-                <h2 class="player-modal-title" id="player-modal-title">DETALLES DEL JUGADOR</h2>
+                <h2 class="player-modal-title" id="player-modal-title">ᴅᴇᴛᴀʟʟᴇꜱ ᴅᴇʟ ᴊᴜɢᴀᴅᴏʀ</h2>
                 <button class="close-modal" onclick="closePlayerModal()">&times;</button>
             </div>
             <div class="player-modal-body">
                 <div class="player-skin-container">
                     <img id="player-skin" class="player-skin" src="" alt="Skin del jugador">
                 </div>
+                <div class="player-info">
+                    <div class="player-info-row">
+                        <span class="player-info-label">ɴɪᴄᴋ:</span>
+                        <span class="player-info-value" id="player-nick"></span>
+                    </div>
+                    <div class="player-info-row">
+                        <span class="player-info-label">ʀᴇɢɪóɴ:</span>
+                        <span class="player-info-value" id="player-region"></span>
+                    </div>
+                    <div class="player-info-row">
+                        <span class="player-info-label">ᴘᴜɴᴛᴏꜱ:</span>
+                        <span class="player-info-value" id="player-points"></span>
+                    </div>
+                    <div class="player-info-row">
+                        <span class="player-info-label">ᴘʀᴇᴍɪᴜᴍ:</span>
+                        <span class="player-info-value" id="player-premium"></span>
+                    </div>
+                    <div class="player-info-row">
+                        <span class="player-info-label">ʀᴀɴᴋ:</span>
+                        <span class="player-info-value">
+                            <span id="player-rank-badge" class="rank-badge"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="player-tiers">
+                <h3>ᴛɪᴇʀꜱ</h3>
+                <div id="player-tiers-container">
+                    <!-- Tiers se mostrarán aquí -->
+                </div>
+            </div>
+            <div class="player-modal-footer">
+                <button class="player-modal-button" onclick="closePlayerModal()">ᴄᴇʀʀᴀʀ</button>
             </div>
         </div>
     </div>
+
 
      <script>
 
@@ -1512,8 +1626,7 @@
   { nick: "sielk_", region: "NA", subTiers: { sword: "HT5" }, puntos: 2, premium: true }
 ];
         
-          // ========== FUNCIÓN PRINCIPAL ==========
-        function displayPlayers(playerList = players) {
+            function displayPlayers(playerList = players) {
             const playersList = document.getElementById('players-list');
             playersList.innerHTML = '';
 
@@ -1615,28 +1728,28 @@
             
             // Configurar información básica
             nickElement.textContent = player.nick;
-            regionElement.textContent = player.region || 'No especificada';
+            regionElement.textContent = player.region || 'ɴᴏ ᴇꜱᴘᴇᴄɪꜰɪᴄᴀᴅᴀ';
             pointsElement.textContent = player.puntos;
-            premiumElement.textContent = player.premium ? 'Sí' : 'No';
+            premiumElement.textContent = player.premium ? 'ꜱɪ́' : 'ɴᴏ';
             
             // Configurar título del modal con animación
             modalTitle.style.animation = 'none';
             setTimeout(() => {
                 modalTitle.style.animation = 'pulse 0.5s ease-out';
-                modalTitle.textContent = `DETALLES DE ${player.nick.toUpperCase()}`;
+                modalTitle.textContent = `ᴅᴇᴛᴀʟʟᴇꜱ ᴅᴇ ${player.nick.toUpperCase()}`;
             }, 10);
             
             // Configurar badge de rango
             rankBadge.className = 'rank-badge';
             if (rank === 1) {
                 rankBadge.classList.add('rank-1');
-                rankBadge.textContent = 'TOP 1';
+                rankBadge.textContent = 'ᴛᴏᴘ 1';
             } else if (rank === 2) {
                 rankBadge.classList.add('rank-2');
-                rankBadge.textContent = 'TOP 2';
+                rankBadge.textContent = 'ᴛᴏᴘ 2';
             } else if (rank === 3) {
                 rankBadge.classList.add('rank-3');
-                rankBadge.textContent = 'TOP 3';
+                rankBadge.textContent = 'ᴛᴏᴘ 3';
             } else {
                 rankBadge.textContent = `#${rank}`;
             }
@@ -1672,7 +1785,7 @@
                 
                 const tierSpan = document.createElement('span');
                 tierSpan.className = `player-tier-value tier-${tierNumber}`;
-                tierSpan.textContent = tierValue || 'No asignado';
+                tierSpan.textContent = tierValue || 'ɴᴏ ᴀꜱɪɢɴᴀᴅᴏ';
                 
                 tierDiv.appendChild(icon);
                 tierDiv.appendChild(categorySpan);
@@ -1709,15 +1822,15 @@
             const modalTitle = document.getElementById('modal-title');
             
             const titles = {
-                'all': 'Todos los jugadores',
-                'nethpot': 'Nethpot',
-                'crystal': 'Crystal',
-                'sword': 'Sword',
-                'uhc': 'UHC',
-                'mace': 'Mace'
+                'all': 'ᴛᴏᴅᴏꜱ ʟᴏꜱ ᴊᴜɢᴀᴅᴏʀᴇꜱ',
+                'nethpot': 'ɴᴇᴛʜᴘᴏᴛ',
+                'crystal': 'ᴄʀʏꜱᴛᴀʟ',
+                'sword': 'ꜱᴡᴏʀᴅ',
+                'uhc': 'ᴜʜᴄ',
+                'mace': 'ᴍᴀᴄᴇ'
             };
             
-            modalTitle.textContent = titles[category] || 'Categoría';
+            modalTitle.textContent = titles[category] || 'ᴄᴀᴛᴇɢᴏʀɪᴀ';
             modal.dataset.category = category;
             
             // Resetear tabs
@@ -1790,14 +1903,14 @@
                 rankingTable.style.display = 'block';
                 searchBar.style.display = 'flex';
                 categoriesContainer.style.display = 'flex';
-                staffBtn.innerHTML = '<i class="fas fa-users"></i> Moon Staff';
+                staffBtn.innerHTML = '<i class="fas fa-users"></i> ᴍᴏᴏɴ ꜱᴛᴀꜰꜰ';
             } else {
                 // Mostrar staff
                 staffContainer.style.display = 'block';
                 rankingTable.style.display = 'none';
                 searchBar.style.display = 'none';
                 categoriesContainer.style.display = 'none';
-                staffBtn.innerHTML = '<i class="fas fa-trophy"></i> Moon Tierlist';
+                staffBtn.innerHTML = '<i class="fas fa-trophy"></i> ᴍᴏᴏɴ ᴛɪᴇʀʟɪꜱᴛ';
             }
         }
 
@@ -1817,7 +1930,7 @@
                 rankingTable.style.display = 'block';
                 searchBar.style.display = 'flex';
                 categoriesContainer.style.display = 'flex';
-                cheaterBtn.innerHTML = '<i class="fas fa-user-slash"></i> Cheaterlist';
+                cheaterBtn.innerHTML = '<i class="fas fa-user-slash"></i> ᴄʜᴇᴀᴛᴇʀʟɪꜱᴛ';
             } else {
                 // Mostrar cheaterlist
                 cheaterlistContainer.style.display = 'block';
@@ -1826,7 +1939,7 @@
                 categoriesContainer.style.display = 'none';
                 staffContainer.style.display = 'none';
                 blacklistContainer.style.display = 'none';
-                cheaterBtn.innerHTML = '<i class="fas fa-trophy"></i> Moon Tierlist';
+                cheaterBtn.innerHTML = '<i class="fas fa-trophy"></i> ᴍᴏᴏɴ ᴛɪᴇʀʟɪꜱᴛ';
             }
         }
 
@@ -1845,7 +1958,7 @@
                 rankingTable.style.display = 'block';
                 searchBar.style.display = 'flex';
                 categoriesContainer.style.display = 'flex';
-                blacklistBtn.innerHTML = '<i class="fas fa-ban"></i> Blacklist';
+                blacklistBtn.innerHTML = '<i class="fas fa-ban"></i> ʙʟᴀᴄᴋʟɪꜱᴛ';
             } else {
                 // Mostrar blacklist
                 blacklistContainer.style.display = 'block';
@@ -1854,7 +1967,7 @@
                 categoriesContainer.style.display = 'none';
                 staffContainer.style.display = 'none';
                 cheaterlistContainer.style.display = 'none';
-                blacklistBtn.innerHTML = '<i class="fas fa-trophy"></i> Moon Tierlist';
+                blacklistBtn.innerHTML = '<i class="fas fa-trophy"></i> ᴍᴏᴏɴ ᴛɪᴇʀʟɪꜱᴛ';
             }
         }
 
@@ -1886,6 +1999,22 @@
             document.getElementById('category-modal').style.display = 'none';
         }
 
+        // ========== TOGGLE EFFECTS ==========
+        function toggleEffects() {
+            const effectsToggle = document.getElementById('effects-toggle');
+            const leavesContainer = document.getElementById('falling-leaves');
+            
+            if (leavesContainer.style.display === 'none') {
+                leavesContainer.style.display = 'block';
+                effectsToggle.innerHTML = '<i class="fas fa-magic"></i>';
+                effectsToggle.title = 'Desactivar efectos';
+            } else {
+                leavesContainer.style.display = 'none';
+                effectsToggle.innerHTML = '<i class="fas fa-magic" style="opacity:0.5"></i>';
+                effectsToggle.title = 'Activar efectos';
+            }
+        }
+
         // ========== INICIALIZACIÓN ==========
         window.addEventListener('load', () => {
             // Reproducir sonido
@@ -1899,6 +2028,9 @@
                     document.querySelector('.loader').style.display = 'none';
                     displayPlayers();
                     createLeaves();
+                    
+                    // Configurar el toggle de efectos
+                    document.getElementById('effects-toggle').addEventListener('click', toggleEffects);
                 }, 500);
             }, 2000);
         });
@@ -1907,6 +2039,9 @@
         function createLeaves() {
             const leavesContainer = document.getElementById('falling-leaves');
             const leafTypes = ['🍁', '🍂', '🌸', '✨', '🎮', '⚡', '🔮', '💎', '⚔️', '🛡️'];
+
+            // Limpiar hojas existentes
+            leavesContainer.innerHTML = '';
 
             for (let i = 0; i < 30; i++) {
                 const leaf = document.createElement('div');
@@ -1921,8 +2056,24 @@
                 leaf.style.userSelect = 'none';
                 leaf.style.zIndex = '1000';
                 leaf.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+                leaf.style.willChange = 'transform, opacity';
                 leavesContainer.appendChild(leaf);
             }
+        }
+
+        // Optimización para FPS
+        document.addEventListener('mousemove', (e) => {
+            // Usar requestAnimationFrame para animaciones fluidas
+            requestAnimationFrame(() => {
+                // Código que responde al movimiento del mouse
+            });
+        }, { passive: true });
+
+        // Optimización general
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(() => {
+                // Código que no es crítico y puede ejecutarse cuando el navegador esté inactivo
+            });
         }
     </script>
 </body>
